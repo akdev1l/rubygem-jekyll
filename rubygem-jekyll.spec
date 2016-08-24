@@ -12,6 +12,7 @@ Source0:	https://rubygems.org/downloads/%{gem_name}-%{version}.gem
 
 BuildArch:	noarch
 BuildRequires:	help2man
+BuildRequires:	rubygem(bigdecimal)
 BuildRequires:	rubygem(colorator)
 BuildRequires:	rubygem(jekyll-sass-converter)
 BuildRequires:	rubygem(jekyll-watch)
@@ -23,7 +24,10 @@ BuildRequires:	rubygem(rouge)
 BuildRequires:	rubygem(safe_yaml)
 BuildRequires:	rubygems-devel
 
-Provides:	%{gem_name}	== %{version}-%{release}
+Provides:	%{gem_name}		== %{version}-%{release}
+%if (0%{?rhel} && 0%{?rhel} <=7)
+Provides:	rubygem(%{gem_name})	== %{version}-%{release}
+%endif # (0%%{?rhel} && 0%%{?rhel} <=7)
 
 %description
 Jekyll is a simple, blog-aware, static site generator perfect
