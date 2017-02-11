@@ -3,7 +3,7 @@
 
 Name:		rubygem-%{gem_name}
 Version:	3.2.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Transform your plain text into static websites and blogs
 
 License:	MIT
@@ -93,6 +93,9 @@ export GEM_PATH="%{buildroot}%{gem_dir}:%{gem_dir}"
 
 
 %changelog
+* Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 3.2.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Wed Aug 24 2016 Björn Esser <fedora@besser82.io> - 3.2.1-1
 - initial import (#1368851)
 
