@@ -3,7 +3,7 @@
 
 Name:		rubygem-%{gem_name}
 Version:	3.2.1
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Transform your plain text into static websites and blogs
 
 License:	MIT
@@ -23,6 +23,8 @@ BuildRequires:	rubygem(pathutil)
 BuildRequires:	rubygem(rouge)
 BuildRequires:	rubygem(safe_yaml)
 BuildRequires:	rubygems-devel
+
+Requires:	rubygem(json)
 
 Provides:	%{gem_name}		== %{version}-%{release}
 %if (0%{?rhel} && 0%{?rhel} <=7)
@@ -93,6 +95,9 @@ export GEM_PATH="%{buildroot}%{gem_dir}:%{gem_dir}"
 
 
 %changelog
+* Sun Apr 09 2017 Björn Esser <besser82@fedoraproject.org> - 3.2.1-3
+- Add explicit Requires: rubygem(json)
+
 * Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 3.2.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
