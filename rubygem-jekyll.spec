@@ -3,7 +3,7 @@
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
 Version:        3.8.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        MIT
 
 URL:            https://github.com/jekyll/jekyll
@@ -41,6 +41,9 @@ Patch6:         06-test-disable-pygments.patch
 Patch7:         07-test-disable-classifier-reborn.patch
 Patch8:         08-test-disable-coffeescript.patch
 
+# Patch to disable tests reliant on the Gemfile and .gemspec file,
+# which are not shipped as part of the jekyll gem:
+Patch9:         09-test-disable-bundler.patch
 
 BuildRequires:  ruby(release)
 BuildRequires:  rubygems-devel
@@ -51,6 +54,7 @@ BuildRequires:  help2man
 # gems needed for running the test suite
 BuildRequires:  rubygem(addressable) >= 2.4
 BuildRequires:  rubygem(bundler)
+BuildRequires:  rubygem(coderay)
 BuildRequires:  rubygem(colorator)
 BuildRequires:  rubygem(em-websocket)
 BuildRequires:  rubygem(httpclient)
@@ -116,6 +120,7 @@ Documentation for %{name}.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 # Relax dependency constraints on i18n
 %gemspec_remove_dep -g i18n "~> 0.7"
@@ -148,8 +153,7 @@ help2man -N -s1 -o %{buildroot}%{_mandir}/man1/%{gem_name}.1 \
 
 
 %check
-# There are still some strange failures among the results of the unit tests:
-ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)' || :
+ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %files
@@ -176,6 +180,11 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)' || :
 
 
 %changelog
+* Tue Jun 05 2018 Fabio Valentini <decathorpe@gmail.com> - 3.8.2-3
+- Fix kramdown test issues (patch: Vít Ondruch).
+- Patch test suite to remove tests reliant on upstream Gemfile and .gemspec.
+- Don't ignore test results anymore.
+
 * Tue Jun 05 2018 Fabio Valentini <decathorpe@gmail.com> - 3.8.2-2
 - Drop code coverage and minitest plugins (patches: Vít Ondruch).
 - Patch test suite to remove broken tests and tests for optional functionality.
