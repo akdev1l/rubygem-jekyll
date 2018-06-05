@@ -1,0 +1,79 @@
+diff --git a/test/test_new_command.rb b/test/test_new_command.rb
+index 632ad3d5..54bbf361 100644
+--- a/test/test_new_command.rb
++++ b/test/test_new_command.rb
+@@ -27,34 +27,26 @@ class TestNewCommand < JekyllUnitTest
+ 
+     should "create a new directory" do
+       refute_exist @full_path
+-      capture_output { Jekyll::Commands::New.process(@args) }
++      capture_output { Jekyll::Commands::New.process(@args, "--skip-bundle") }
+       assert_exist @full_path
+     end
+ 
+     should "create a Gemfile" do
+       gemfile = File.join(@full_path, "Gemfile")
+       refute_exist @full_path
+-      capture_output { Jekyll::Commands::New.process(@args) }
++      capture_output { Jekyll::Commands::New.process(@args, "--skip-bundle") }
+       assert_exist gemfile
+       assert_match(%r!gem "jekyll", "~> #{Jekyll::VERSION}"!, File.read(gemfile))
+       assert_match(%r!gem "github-pages"!, File.read(gemfile))
+     end
+ 
+-    should "display a success message" do
+-      output = capture_output { Jekyll::Commands::New.process(@args) }
+-      success_message = "New jekyll site installed in #{@full_path.cyan}. "
+-      bundle_message = "Running bundle install in #{@full_path.cyan}... "
+-      assert_includes output, success_message
+-      assert_includes output, bundle_message
+-    end
+-
+     should "copy the static files in site template to the new directory" do
+       static_template_files = dir_contents(site_template).reject do |f|
+         File.extname(f) == ".erb"
+       end
+       static_template_files << "/Gemfile"
+ 
+-      capture_output { Jekyll::Commands::New.process(@args) }
++      capture_output { Jekyll::Commands::New.process(@args, "--skip-bundle") }
+ 
+       new_site_files = dir_contents(@full_path).reject do |f|
+         File.extname(f) == ".markdown"
+@@ -76,7 +68,7 @@ class TestNewCommand < JekyllUnitTest
+         f.gsub! "0000-00-00", stubbed_date
+       end
+ 
+-      capture_output { Jekyll::Commands::New.process(@args) }
++      capture_output { Jekyll::Commands::New.process(@args, "--skip-bundle") }
+ 
+       new_site_files = dir_contents(@full_path).select do |f|
+         erb_template_files.include? f
+@@ -87,15 +79,15 @@ class TestNewCommand < JekyllUnitTest
+ 
+     should "create blank project" do
+       blank_contents = %w(/_drafts /_layouts /_posts /index.html)
+-      output = capture_output { Jekyll::Commands::New.process(@args, "--blank") }
++      output = capture_output { Jekyll::Commands::New.process(@args, "--skip-bundle --blank") }
+       bundle_message = "Running bundle install in #{@full_path.cyan}..."
+       assert_same_elements blank_contents, dir_contents(@full_path)
+       refute_includes output, bundle_message
+     end
+ 
+     should "force created folder" do
+-      capture_output { Jekyll::Commands::New.process(@args) }
+-      output = capture_output { Jekyll::Commands::New.process(@args, "--force") }
++      capture_output { Jekyll::Commands::New.process(@args, "--skip-bundle", ) }
++      output = capture_output { Jekyll::Commands::New.process(@args, "--skip-bundle --force") }
+       assert_match %r!New jekyll site installed in!, output
+     end
+ 
+@@ -118,7 +110,7 @@ class TestNewCommand < JekyllUnitTest
+ 
+     should "create a new directory" do
+       refute_exist @site_name_with_spaces
+-      capture_output { Jekyll::Commands::New.process(@multiple_args) }
++      capture_output { Jekyll::Commands::New.process(@multiple_args, "--skip-bundle") }
+       assert_exist @site_name_with_spaces
+     end
+   end

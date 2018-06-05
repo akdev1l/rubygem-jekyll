@@ -3,21 +3,44 @@
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
 Version:        3.8.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        MIT
 
 URL:            https://github.com/jekyll/jekyll
 Source0:        https://rubygems.org/gems/%{gem_name}-%{version}.gem
 
-# Generated tarballs of tests and Rakefile (not present in the gem file)
+# Generated tarball of tests (not present in the gem file)
 # git clone https://github.com/jekyll/jekyll jekyll-repo && pushd jekyll-repo
 # git checkout v3.8.2
 # git archive -o ../jekyll-3.8.2-test.tar.gz v3.8.2 test
-# cp -pv Rakefile ../Rakefile-3.8.2
 # popd
 # rm -rf jekyll-repo
 Source1:        %{gem_name}-%{version}-test.tar.gz
-Source2:        Rakefile-%{version}
+
+
+# Patch test helper to disable code coverage and minitest plugins
+Patch0:         00-test-helper.patch
+
+# Patch tests for the "jekyll new" command to use "--skip-bundle" - to not
+# require internet access and fail due to timeouts in "bundle install"
+Patch1:         01-test-new-command-skip-bundle.patch
+
+# Patch to adapt to different rdiscount TOC generation
+Patch2:         02-test-rdiscount-behavior-fix.patch
+
+# Patch to remove (failing) internet connectivity check
+Patch3:         03-test-utils-disable-internet-check.patch
+
+# Patch to disable broken tests using the "test-theme" theme
+Patch4:         04-test-disable-test-theme.patch
+
+# Patches to remove tests for optional functionality with missing dependencies:
+# classifier-reborn, jekyll-coffeescript, pygments.rb, tomlrb
+Patch5:         05-test-disable-toml.patch
+Patch6:         06-test-disable-pygments.patch
+Patch7:         07-test-disable-classifier-reborn.patch
+Patch8:         08-test-disable-coffeescript.patch
+
 
 BuildRequires:  ruby(release)
 BuildRequires:  rubygems-devel
@@ -37,25 +60,14 @@ BuildRequires:  rubygem(kramdown)
 BuildRequires:  rubygem(liquid) >= 4.0
 BuildRequires:  rubygem(mercenary)
 BuildRequires:  rubygem(minitest)
-BuildRequires:  rubygem(minitest-profile)
-BuildRequires:  rubygem(minitest-reporters)
 BuildRequires:  rubygem(nokogiri)
 BuildRequires:  rubygem(pathutil)
-BuildRequires:  rubygem(rake)
 BuildRequires:  rubygem(rdiscount)
 BuildRequires:  rubygem(rouge)
 BuildRequires:  rubygem(redcarpet)
 BuildRequires:  rubygem(rspec-mocks)
 BuildRequires:  rubygem(safe_yaml)
 BuildRequires:  rubygem(shoulda)
-BuildRequires:  rubygem(simplecov)
-
-# Additional gems required by the test suite, which cover optional features of
-# jekyll (gems are not yet packaged for fedora):
-# BuildRequires:  rubygem(classifier-reborn)
-# BuildRequires:  rubygem(jekyll-coffeescript)
-# BuildRequires:  rubygem(pygments.rb)
-# BuildRequires:  rubygem(tomlrb)
 
 # Additional gems required to run jekyll:
 Requires:       rubygem(bigdecimal)
@@ -93,6 +105,17 @@ Documentation for %{name}.
 
 %prep
 %setup -q -n %{gem_name}-%{version}
+%setup -q -n %{gem_name}-%{version} -a1
+
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
 
 # Relax dependency constraints on i18n
 %gemspec_remove_dep -g i18n "~> 0.7"
@@ -125,33 +148,8 @@ help2man -N -s1 -o %{buildroot}%{_mandir}/man1/%{gem_name}.1 \
 
 
 %check
-pushd .%{gem_instdir}
-
-# There are some failures among the results of the unit tests, most of them are
-# caused by missing dependencies:
-#
-# - classifier-reborn:
-#     Gem isn't packaged for fedora, it has *really* outdated dependencies.
-# - jekyll-coffeescript:
-#     Gem isn't yet packaged for fedora, and coffeescript functionality is
-#     optional.
-# - pygments.rb:
-#     Gem isn't packaged for fedora, it's test suite fails, and it vendors
-#     its own copy of pygments. Additionally, support for pygments is optional
-#     and will be dropped with jekyll 4.0 anyway.
-# - tomlrb:
-#     Gem isn't yet packaged for fedora, and the functionality looks optional.
-
-# extract "test" directory
-tar -xzvf %{SOURCE1}
-
-# add "Rakefile"
-cp %{SOURCE2} ./Rakefile
-
-# run tests and ignore failure (for now)
-rake test TESTOPTS='-v' --trace || :
-
-popd
+# There are still some strange failures among the results of the unit tests:
+ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)' || :
 
 
 %files
@@ -178,6 +176,10 @@ popd
 
 
 %changelog
+* Tue Jun 05 2018 Fabio Valentini <decathorpe@gmail.com> - 3.8.2-2
+- Drop code coverage and minitest plugins (patches: Vít Ondruch).
+- Patch test suite to remove broken tests and tests for optional functionality.
+
 * Mon Jun 04 2018 Fabio Valentini <decathorpe@gmail.com> - 3.8.2-1
 - Update to version 3.8.2.
 

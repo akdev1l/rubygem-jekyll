@@ -1,0 +1,43 @@
+diff --git a/test/helper.rb b/test/helper.rb
+index aa94be13..9bef2a8e 100644
+--- a/test/helper.rb
++++ b/test/helper.rb
+@@ -11,24 +11,10 @@ def jruby?
+   defined?(RUBY_ENGINE) && RUBY_ENGINE == "jruby"
+ end
+ 
+-if ENV["CI"]
+-  require "simplecov"
+-  SimpleCov.start
+-else
+-  require File.expand_path("simplecov_custom_profile", __dir__)
+-  SimpleCov.start "gem" do
+-    add_filter "/vendor/gem"
+-    add_filter "/vendor/bundle"
+-    add_filter ".bundle"
+-  end
+-end
+-
+ require "nokogiri"
+ require "rubygems"
+ require "ostruct"
+ require "minitest/autorun"
+-require "minitest/reporters"
+-require "minitest/profile"
+ require "rspec/mocks"
+ require_relative "../lib/jekyll.rb"
+ 
+@@ -46,13 +32,6 @@ include Jekyll
+ 
+ require "jekyll/commands/serve/servlet"
+ 
+-# Report with color.
+-Minitest::Reporters.use! [
+-  Minitest::Reporters::DefaultReporter.new(
+-    :color => true
+-  ),
+-]
+-
+ module Minitest::Assertions
+   def assert_exist(filename, msg = nil)
+     msg = message(msg) { "Expected '#{filename}' to exist" }

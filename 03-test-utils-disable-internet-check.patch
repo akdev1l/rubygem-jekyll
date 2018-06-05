@@ -1,0 +1,14 @@
+diff --git a/test/test_utils.rb b/test/test_utils.rb
+index 844ef825..596bd8f9 100644
+--- a/test/test_utils.rb
++++ b/test/test_utils.rb
+@@ -415,9 +415,4 @@ class TestUtils < JekyllUnitTest
+     end
+   end
+ 
+-  context "Utils::Internet.connected?" do
+-    should "return true if there's internet" do
+-      assert Utils::Internet.connected?
+-    end
+-  end
+ end
