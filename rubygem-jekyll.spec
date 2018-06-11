@@ -2,8 +2,8 @@
 
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
-Version:        3.8.2
-Release:        3%{?dist}
+Version:        3.8.3
+Release:        1%{?dist}
 License:        MIT
 
 URL:            https://github.com/jekyll/jekyll
@@ -11,8 +11,8 @@ Source0:        https://rubygems.org/gems/%{gem_name}-%{version}.gem
 
 # Generated tarball of tests (not present in the gem file)
 # git clone https://github.com/jekyll/jekyll jekyll-repo && pushd jekyll-repo
-# git checkout v3.8.2
-# git archive -o ../jekyll-3.8.2-test.tar.gz v3.8.2 test
+# git checkout v3.8.3
+# git archive -o ../jekyll-3.8.3-test.tar.gz v3.8.3 test
 # popd
 # rm -rf jekyll-repo
 Source1:        %{gem_name}-%{version}-test.tar.gz
@@ -180,6 +180,9 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
+* Mon Jun 11 2018 Fabio Valentini <decathorpe@gmail.com> - 3.8.3-1
+- Update to version 3.8.3.
+
 * Tue Jun 05 2018 Fabio Valentini <decathorpe@gmail.com> - 3.8.2-3
 - Fix kramdown test issues (patch: Vít Ondruch).
 - Patch test suite to remove tests reliant on upstream Gemfile and .gemspec.
