@@ -3,7 +3,7 @@
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
 Version:        3.8.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        MIT
 
 URL:            https://github.com/jekyll/jekyll
@@ -180,6 +180,9 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
+* Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 3.8.3-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Mon Jun 11 2018 Fabio Valentini <decathorpe@gmail.com> - 3.8.3-1
 - Update to version 3.8.3.
 
