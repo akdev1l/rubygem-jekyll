@@ -1,3 +1,14 @@
+From 2047b66adcf0d0aea84f490bd375c2a9f34554dc Mon Sep 17 00:00:00 2001
+From: Fabio Valentini <decathorpe@gmail.com>
+Date: Wed, 19 Sep 2018 12:23:48 +0200
+Subject: [PATCH 8/9] test/coffeescript: disable tests requiring the
+ coffeescript gem
+
+---
+ test/test_coffeescript.rb | 49 ---------------------------------------
+ 1 file changed, 49 deletions(-)
+ delete mode 100644 test/test_coffeescript.rb
+
 diff --git a/test/test_coffeescript.rb b/test/test_coffeescript.rb
 deleted file mode 100644
 index a60e0595..00000000
@@ -53,3 +64,6 @@ index a60e0595..00000000
 -    end
 -  end
 -end
+-- 
+2.17.1
+

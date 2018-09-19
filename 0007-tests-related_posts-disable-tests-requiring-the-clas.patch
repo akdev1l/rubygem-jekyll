@@ -1,3 +1,14 @@
+From 2b85150666392127bfe010a14c6478905a97fa1e Mon Sep 17 00:00:00 2001
+From: Fabio Valentini <decathorpe@gmail.com>
+Date: Wed, 19 Sep 2018 12:23:20 +0200
+Subject: [PATCH 7/9] tests/related_posts: disable tests requiring the
+ classifier-reborn gem
+
+---
+ test/test_related_posts.rb | 66 --------------------------------------
+ 1 file changed, 66 deletions(-)
+ delete mode 100644 test/test_related_posts.rb
+
 diff --git a/test/test_related_posts.rb b/test/test_related_posts.rb
 deleted file mode 100644
 index d6a8fe6f..00000000
@@ -70,3 +81,6 @@ index d6a8fe6f..00000000
 -    end
 -  end
 -end
+-- 
+2.17.1
+

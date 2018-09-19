@@ -1,3 +1,41 @@
+From d2c49d84be1f4a427717578d57080ba4e67bc3ea Mon Sep 17 00:00:00 2001
+From: Fabio Valentini <decathorpe@gmail.com>
+Date: Wed, 19 Sep 2018 12:23:00 +0200
+Subject: [PATCH 6/9] tests: disable tests requiring the pygments.rb gem
+
+---
+ test/test_redcarpet.rb |  17 ---
+ test/test_tags.rb      | 317 -----------------------------------------
+ 2 files changed, 334 deletions(-)
+
+diff --git a/test/test_redcarpet.rb b/test/test_redcarpet.rb
+index 51da49c5..48982ed8 100644
+--- a/test/test_redcarpet.rb
++++ b/test/test_redcarpet.rb
+@@ -45,23 +45,6 @@ class TestRedcarpet < JekyllUnitTest
+         @markdown.convert("**bad code not here**: <script>i am bad</script>").strip
+     end
+ 
+-    context "with pygments enabled" do
+-      setup do
+-        @markdown = Converters::Markdown.new @config.merge(
+-          { "highlighter" => "pygments" }
+-        )
+-      end
+-
+-      should "render fenced code blocks with syntax highlighting" do
+-        assert_equal(
+-          %(<div class="highlight"><pre><code class="language-ruby" ) +
+-          %(data-lang="ruby"><span></span><span class="nb">puts</span> <span ) +
+-          %(class="s2">&quot;Hello world&quot;</span>\n</code></pre></div>),
+-          @markdown.convert(@sample).strip
+-        )
+-      end
+-    end
+-
+     context "with rouge enabled" do
+       setup do
+         @markdown = Converters::Markdown.new @config.merge({ "highlighter" => "rouge" })
 diff --git a/test/test_tags.rb b/test/test_tags.rb
 index ae75c024..4bb7c209 100644
 --- a/test/test_tags.rb
@@ -332,31 +370,6 @@ index ae75c024..4bb7c209 100644
 -    end
    end
  end
-diff --git a/test/test_redcarpet.rb b/test/test_redcarpet.rb
-index 51da49c5..48982ed8 100644
---- a/test/test_redcarpet.rb
-+++ b/test/test_redcarpet.rb
-@@ -45,23 +45,6 @@ class TestRedcarpet < JekyllUnitTest
-         @markdown.convert("**bad code not here**: <script>i am bad</script>").strip
-     end
- 
--    context "with pygments enabled" do
--      setup do
--        @markdown = Converters::Markdown.new @config.merge(
--          { "highlighter" => "pygments" }
--        )
--      end
--
--      should "render fenced code blocks with syntax highlighting" do
--        assert_equal(
--          %(<div class="highlight"><pre><code class="language-ruby" ) +
--          %(data-lang="ruby"><span></span><span class="nb">puts</span> <span ) +
--          %(class="s2">&quot;Hello world&quot;</span>\n</code></pre></div>),
--          @markdown.convert(@sample).strip
--        )
--      end
--    end
--
-     context "with rouge enabled" do
-       setup do
-         @markdown = Converters::Markdown.new @config.merge({ "highlighter" => "rouge" })
+-- 
+2.17.1
+

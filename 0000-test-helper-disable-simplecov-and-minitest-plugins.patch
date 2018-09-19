@@ -1,3 +1,12 @@
+From 2fd3f9380a81a7ff4bc9687211ebf5aed17d2b62 Mon Sep 17 00:00:00 2001
+From: Fabio Valentini <decathorpe@gmail.com>
+Date: Wed, 19 Sep 2018 12:16:08 +0200
+Subject: [PATCH 0/9] test/helper: disable simplecov and minitest plugins
+
+---
+ test/helper.rb | 21 ---------------------
+ 1 file changed, 21 deletions(-)
+
 diff --git a/test/helper.rb b/test/helper.rb
 index aa94be13..9bef2a8e 100644
 --- a/test/helper.rb
@@ -41,3 +50,6 @@ index aa94be13..9bef2a8e 100644
  module Minitest::Assertions
    def assert_exist(filename, msg = nil)
      msg = message(msg) { "Expected '#{filename}' to exist" }
+-- 
+2.17.1
+

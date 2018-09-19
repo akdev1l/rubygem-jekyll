@@ -2,8 +2,8 @@
 
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
-Version:        3.8.3
-Release:        2%{?dist}
+Version:        3.8.4
+Release:        1%{?dist}
 License:        MIT
 
 URL:            https://github.com/jekyll/jekyll
@@ -11,39 +11,42 @@ Source0:        https://rubygems.org/gems/%{gem_name}-%{version}.gem
 
 # Generated tarball of tests (not present in the gem file)
 # git clone https://github.com/jekyll/jekyll jekyll-repo && pushd jekyll-repo
-# git checkout v3.8.3
-# git archive -o ../jekyll-3.8.3-test.tar.gz v3.8.3 test
+# git checkout v3.8.4
+# git archive -o ../jekyll-3.8.4-test.tar.gz v3.8.4 test
 # popd
 # rm -rf jekyll-repo
 Source1:        %{gem_name}-%{version}-test.tar.gz
 
+# Patches generated with "git format-patch --start-number 0"
+# Repository:   https://pagure.io/jekyll-fedora/branch/fedora-3.8.4
+# Patches:      v3.8.4 → fedora-3.8.4
 
 # Patch test helper to disable code coverage and minitest plugins
-Patch0:         00-test-helper.patch
+Patch0:         0000-test-helper-disable-simplecov-and-minitest-plugins.patch
 
 # Patch tests for the "jekyll new" command to use "--skip-bundle" - to not
 # require internet access and fail due to timeouts in "bundle install"
-Patch1:         01-test-new-command-skip-bundle.patch
+Patch1:         0001-test-new_command-add-skip-bundle-to-fix-tests-withou.patch
 
 # Patch to adapt to different rdiscount TOC generation
-Patch2:         02-test-rdiscount-behavior-fix.patch
+Patch2:         0002-test-rdiscount-adapt-to-different-TOC-generation-wit.patch
 
 # Patch to remove (failing) internet connectivity check
-Patch3:         03-test-utils-disable-internet-check.patch
+Patch3:         0003-test-utils-remove-internet-connectivity-test.patch
 
 # Patch to disable broken tests using the "test-theme" theme
-Patch4:         04-test-disable-test-theme.patch
+Patch4:         0004-test-disable-tests-requiring-the-test-theme.patch
 
 # Patches to remove tests for optional functionality with missing dependencies:
 # classifier-reborn, jekyll-coffeescript, pygments.rb, tomlrb
-Patch5:         05-test-disable-toml.patch
-Patch6:         06-test-disable-pygments.patch
-Patch7:         07-test-disable-classifier-reborn.patch
-Patch8:         08-test-disable-coffeescript.patch
+Patch5:         0005-tests-configuration-disable-tests-requiring-the-toml.patch
+Patch6:         0006-tests-disable-tests-requiring-the-pygments.rb-gem.patch
+Patch7:         0007-tests-related_posts-disable-tests-requiring-the-clas.patch
+Patch8:         0008-test-coffeescript-disable-tests-requiring-the-coffee.patch
 
 # Patch to disable tests reliant on the Gemfile and .gemspec file,
 # which are not shipped as part of the jekyll gem:
-Patch9:         09-test-disable-bundler.patch
+Patch9:         0009-test-plugin_manager-disable-tests-requiring-upstream.patch
 
 BuildRequires:  ruby(release)
 BuildRequires:  rubygems-devel
@@ -180,6 +183,9 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
+* Wed Sep 19 2018 Fabio Valentini <decathorpe@gmail.com> - 3.8.4-1
+- Update to version 3.8.4.
+
 * Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 3.8.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 

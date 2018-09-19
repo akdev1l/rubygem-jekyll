@@ -1,3 +1,13 @@
+From 7265a31796a2d0d44d175702f4eb4655486c5db0 Mon Sep 17 00:00:00 2001
+From: Fabio Valentini <decathorpe@gmail.com>
+Date: Wed, 19 Sep 2018 12:17:48 +0200
+Subject: [PATCH 2/9] test/rdiscount: adapt to different TOC generation with
+ new versions
+
+---
+ test/test_rdiscount.rb | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
 diff --git a/test/test_rdiscount.rb b/test/test_rdiscount.rb
 index 7116c29a..796ee81d 100644
 --- a/test/test_rdiscount.rb
@@ -23,3 +33,6 @@ index 7116c29a..796ee81d 100644
   </ul>
   </li>
  </ul>
+-- 
+2.17.1
+

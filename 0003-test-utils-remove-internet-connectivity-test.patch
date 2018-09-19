@@ -1,3 +1,12 @@
+From 3a05800cb312187925017db4d843fc43bfafeb64 Mon Sep 17 00:00:00 2001
+From: Fabio Valentini <decathorpe@gmail.com>
+Date: Wed, 19 Sep 2018 12:18:21 +0200
+Subject: [PATCH 3/9] test/utils: remove internet connectivity test
+
+---
+ test/test_utils.rb | 5 -----
+ 1 file changed, 5 deletions(-)
+
 diff --git a/test/test_utils.rb b/test/test_utils.rb
 index 844ef825..596bd8f9 100644
 --- a/test/test_utils.rb
@@ -12,3 +21,6 @@ index 844ef825..596bd8f9 100644
 -    end
 -  end
  end
+-- 
+2.17.1
+

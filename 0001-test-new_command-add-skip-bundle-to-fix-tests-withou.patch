@@ -1,3 +1,13 @@
+From e127b87424b260e367afe55a971c40d8a2b28849 Mon Sep 17 00:00:00 2001
+From: Fabio Valentini <decathorpe@gmail.com>
+Date: Wed, 19 Sep 2018 12:16:52 +0200
+Subject: [PATCH 1/9] test/new_command: add --skip-bundle to fix tests withouth
+ internet
+
+---
+ test/test_new_command.rb | 24 ++++++++----------------
+ 1 file changed, 8 insertions(+), 16 deletions(-)
+
 diff --git a/test/test_new_command.rb b/test/test_new_command.rb
 index 632ad3d5..54bbf361 100644
 --- a/test/test_new_command.rb
@@ -77,3 +87,6 @@ index 632ad3d5..54bbf361 100644
        assert_exist @site_name_with_spaces
      end
    end
+-- 
+2.17.1
+
