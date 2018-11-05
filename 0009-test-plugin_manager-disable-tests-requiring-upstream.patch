@@ -1,4 +1,4 @@
-From 9021c748e6ee4c3de028ac90c23f61ce8adeb16a Mon Sep 17 00:00:00 2001
+From c3447c4ea8407ef0fddc02a85cdce371ac5cfc02 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Wed, 19 Sep 2018 12:24:23 +0200
 Subject: [PATCH 9/9] test/plugin_manager: disable tests requiring upstream
@@ -49,5 +49,5 @@ index 213bcef6..326c887e 100644
      should "invoke `require_with_graceful_fail`" do
        gems = %w(jemojii foobar)
 -- 
-2.17.1
+2.19.1
 

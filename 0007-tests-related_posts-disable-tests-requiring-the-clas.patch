@@ -1,4 +1,4 @@
-From 2b85150666392127bfe010a14c6478905a97fa1e Mon Sep 17 00:00:00 2001
+From bddaed189b88e9da499b5f161f71242843f70ae8 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Wed, 19 Sep 2018 12:23:20 +0200
 Subject: [PATCH 7/9] tests/related_posts: disable tests requiring the
@@ -82,5 +82,5 @@ index d6a8fe6f..00000000
 -  end
 -end
 -- 
-2.17.1
+2.19.1
 

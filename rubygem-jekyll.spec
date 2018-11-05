@@ -2,7 +2,7 @@
 
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
-Version:        3.8.4
+Version:        3.8.5
 Release:        1%{?dist}
 License:        MIT
 
@@ -11,22 +11,17 @@ Source0:        https://rubygems.org/gems/%{gem_name}-%{version}.gem
 
 # Generated tarball of tests (not present in the gem file)
 # git clone https://github.com/jekyll/jekyll jekyll-repo && pushd jekyll-repo
-# git checkout v3.8.4
-# git archive -o ../jekyll-3.8.4-test.tar.gz v3.8.4 test
+# git checkout v3.8.5
+# git archive -o ../jekyll-3.8.5-test.tar.gz v3.8.5 test
 # popd
 # rm -rf jekyll-repo
 Source1:        %{gem_name}-%{version}-test.tar.gz
 
-# Patches generated with "git format-patch --start-number 0"
-# Repository:   https://pagure.io/jekyll-fedora/branch/fedora-3.8.4
-# Patches:      v3.8.4 → fedora-3.8.4
+# Patch the "new" command to skip the "bundle install" step
+Patch0:         0000-jekyll-commands-remove-bundle-install-step-for-new-c.patch
 
 # Patch test helper to disable code coverage and minitest plugins
-Patch0:         0000-test-helper-disable-simplecov-and-minitest-plugins.patch
-
-# Patch tests for the "jekyll new" command to use "--skip-bundle" - to not
-# require internet access and fail due to timeouts in "bundle install"
-Patch1:         0001-test-new_command-add-skip-bundle-to-fix-tests-withou.patch
+Patch1:         0001-test-helper-disable-simplecov-and-minitest-plugins.patch
 
 # Patch to adapt to different rdiscount TOC generation
 Patch2:         0002-test-rdiscount-adapt-to-different-TOC-generation-wit.patch
@@ -183,6 +178,9 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
+* Mon Nov 05 2018 Fabio Valentini <decathorpe@gmail.com> - 3.8.5-1
+- Update to version 3.8.5.
+
 * Wed Sep 19 2018 Fabio Valentini <decathorpe@gmail.com> - 3.8.4-1
 - Update to version 3.8.4.
 

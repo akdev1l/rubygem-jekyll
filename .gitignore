@@ -1,4 +1,4 @@
-/results*
+/results_*
 /*.src.rpm
 
 /jekyll-3.2.1.gem
@@ -8,3 +8,5 @@
 /jekyll-3.8.3-test.tar.gz
 /jekyll-3.8.4.gem
 /jekyll-3.8.4-test.tar.gz
+/jekyll-3.8.5.gem
+/jekyll-3.8.5-test.tar.gz

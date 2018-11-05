@@ -1,4 +1,4 @@
-From d2c49d84be1f4a427717578d57080ba4e67bc3ea Mon Sep 17 00:00:00 2001
+From 4baf042868544856e4b3697bbc0f340d2612a8ba Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Wed, 19 Sep 2018 12:23:00 +0200
 Subject: [PATCH 6/9] tests: disable tests requiring the pygments.rb gem
@@ -371,5 +371,5 @@ index ae75c024..4bb7c209 100644
    end
  end
 -- 
-2.17.1
+2.19.1
 
