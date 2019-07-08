@@ -122,6 +122,7 @@ Documentation for %{name}.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 # Relax dependency constraints on i18n
 %gemspec_remove_dep -g i18n "~> 0.7"
