@@ -1,7 +1,7 @@
-From 97ca6da2daa45b874da5ce4f10a6993868b405cc Mon Sep 17 00:00:00 2001
+From d515f43cc9148d15a4d6ef078a5e4a6ed551f725 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Wed, 19 Sep 2018 12:23:48 +0200
-Subject: [PATCH 8/9] test/coffeescript: disable tests requiring the
+Subject: [PATCH 08/10] test/coffeescript: disable tests requiring the
  coffeescript gem
 
 ---
@@ -65,5 +65,5 @@ index a60e0595..00000000
 -  end
 -end
 -- 
-2.19.1
+2.21.0
 

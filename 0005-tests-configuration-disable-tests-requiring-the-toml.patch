@@ -1,7 +1,7 @@
-From 1f1dbb8e5bfca51d9eb086bd378ec1453f0f88f5 Mon Sep 17 00:00:00 2001
+From f78691ab0b497689fb30ed58f39c51a669baff23 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Wed, 19 Sep 2018 12:22:32 +0200
-Subject: [PATCH 5/9] tests/configuration: disable tests requiring the tomlrb
+Subject: [PATCH 05/10] tests/configuration: disable tests requiring the tomlrb
  gem
 
 ---
@@ -53,5 +53,5 @@ index 17c0d219..f4434639 100644
        allow(SafeYAML)
          .to receive(:load_file)
 -- 
-2.19.1
+2.21.0
 

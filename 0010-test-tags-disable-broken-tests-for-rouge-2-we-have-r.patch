@@ -1,0 +1,54 @@
+From 11a0d40b2f5f4f775f597e7645bb1b41f08ae649 Mon Sep 17 00:00:00 2001
+From: Fabio Valentini <decathorpe@gmail.com>
+Date: Mon, 8 Jul 2019 11:41:59 +0200
+Subject: [PATCH 10/10] test/tags: disable broken tests for rouge 2, we have
+ rouge 3 in fedora
+
+---
+ test/test_tags.rb | 23 -----------------------
+ 1 file changed, 23 deletions(-)
+
+diff --git a/test/test_tags.rb b/test/test_tags.rb
+index 8c991d27..60fcd2e9 100644
+--- a/test/test_tags.rb
++++ b/test/test_tags.rb
+@@ -178,18 +178,6 @@ CONTENT
+         )
+       end
+ 
+-      should "render markdown with rouge 2 with line numbers" do
+-        skip "Skipped because using an older version of Rouge" if Utils::Rouge.old_api?
+-        assert_match(
+-          %(<table class="rouge-table"><tbody>) +
+-            %(<tr><td class="gutter gl">) +
+-            %(<pre class="lineno">1\n</pre></td>) +
+-            %(<td class="code"><pre>test\n</pre></td></tr>) +
+-            %(</tbody></table>),
+-          @result
+-        )
+-      end
+-
+       should "render markdown with rouge 1 with line numbers" do
+         skip "Skipped because using a newer version of Rouge" unless Utils::Rouge.old_api?
+         assert_match(
+@@ -326,17 +314,6 @@ This should not be highlighted, right?
+ EOS
+       end
+ 
+-      should "should stop highlighting at boundary with rouge 2" do
+-        skip "Skipped because using an older version of Rouge" if Utils::Rouge.old_api?
+-        expected = <<-EOS
+-<p>This is not yet highlighted</p>\n
+-<figure class="highlight"><pre><code class="language-php" data-lang="php"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+-</pre></td><td class="code"><pre><span class="nx">test</span>\n</pre></td></tr></tbody></table></code></pre></figure>\n
+-<p>This should not be highlighted, right?</p>
+-EOS
+-        assert_match(expected, @result)
+-      end
+-
+       should "should stop highlighting at boundary with rouge 1" do
+         skip "Skipped because using a newer version of Rouge" unless Utils::Rouge.old_api?
+         expected = <<-EOS
+-- 
+2.21.0
+

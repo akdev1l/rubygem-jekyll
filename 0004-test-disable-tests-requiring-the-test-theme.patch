@@ -1,23 +1,23 @@
-From 4f0b8d25d2df5a961bf7d72a8d823c000555fb6e Mon Sep 17 00:00:00 2001
+From 73113f7408b4f9bb7477d9fc66ef5ce6c4bfdc19 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Wed, 19 Sep 2018 12:22:01 +0200
-Subject: [PATCH 4/9] test: disable tests requiring the test theme
+Subject: [PATCH 04/10] test: disable tests requiring the test theme
 
 ---
- test/test_layout_reader.rb       | 16 +++---
- test/test_site.rb                | 29 ----------
- test/test_theme.rb               | 91 --------------------------------
- test/test_theme_assets_reader.rb | 78 ---------------------------
- 4 files changed, 8 insertions(+), 206 deletions(-)
+ test/test_layout_reader.rb       |  16 ++---
+ test/test_site.rb                |  29 ---------
+ test/test_theme.rb               |  91 ---------------------------
+ test/test_theme_assets_reader.rb | 103 -------------------------------
+ 4 files changed, 8 insertions(+), 231 deletions(-)
  delete mode 100644 test/test_theme.rb
  delete mode 100644 test/test_theme_assets_reader.rb
 
 diff --git a/test/test_layout_reader.rb b/test/test_layout_reader.rb
-index 6e56db8a..0f06da4d 100644
+index 805bbac8..a16f11df 100644
 --- a/test/test_layout_reader.rb
 +++ b/test/test_layout_reader.rb
-@@ -68,14 +68,14 @@ class TestLayoutReader < JekyllUnitTest
-         FileUtils.rm(theme_dir("_layouts", "theme-symlink.html"))
+@@ -69,14 +69,14 @@ class TestLayoutReader < JekyllUnitTest
+         FileUtils.rm_f(theme_dir("_layouts", "theme-symlink.html"))
        end
  
 -      should "not read a symlink'd theme" do
@@ -192,10 +192,10 @@ index bc1f8de6..00000000
 -end
 diff --git a/test/test_theme_assets_reader.rb b/test/test_theme_assets_reader.rb
 deleted file mode 100644
-index 358789f5..00000000
+index 983f63b7..00000000
 --- a/test/test_theme_assets_reader.rb
 +++ /dev/null
-@@ -1,78 +0,0 @@
+@@ -1,103 +0,0 @@
 -# frozen_string_literal: true
 -
 -require "helper"
@@ -273,7 +273,32 @@ index 358789f5..00000000
 -      refute_file_with_relative_path site.pages, "assets/style.scss"
 -    end
 -  end
+-
+-  context "symlinked theme" do
+-    should "not read assets from symlinked theme" do
+-      skip_if_windows "Jekyll does not currently support symlinks on Windows."
+-
+-      begin
+-        tmp_dir = Dir.mktmpdir("jekyll-theme-test")
+-        File.open(File.join(tmp_dir, "test.txt"), "wb") { |f| f.write "content" }
+-
+-        theme_dir = File.join(__dir__, "fixtures", "test-theme-symlink")
+-        File.symlink(tmp_dir, File.join(theme_dir, "assets"))
+-
+-        site = fixture_site(
+-          "theme"       => "test-theme-symlink",
+-          "theme-color" => "black"
+-        )
+-        ThemeAssetsReader.new(site).read
+-
+-        assert_empty site.static_files, "static file should not have been picked up"
+-      ensure
+-        FileUtils.rm_rf(tmp_dir)
+-        FileUtils.rm_rf(File.join(theme_dir, "assets"))
+-      end
+-    end
+-  end
 -end
 -- 
-2.19.1
+2.21.0
 

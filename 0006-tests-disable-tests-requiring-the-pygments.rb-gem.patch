@@ -1,7 +1,7 @@
-From 4baf042868544856e4b3697bbc0f340d2612a8ba Mon Sep 17 00:00:00 2001
+From c226ba5672572b7a85f427edd037819fb7c25d8a Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Wed, 19 Sep 2018 12:23:00 +0200
-Subject: [PATCH 6/9] tests: disable tests requiring the pygments.rb gem
+Subject: [PATCH 06/10] tests: disable tests requiring the pygments.rb gem
 
 ---
  test/test_redcarpet.rb |  17 ---
@@ -37,7 +37,7 @@ index 51da49c5..48982ed8 100644
        setup do
          @markdown = Converters::Markdown.new @config.merge({ "highlighter" => "rouge" })
 diff --git a/test/test_tags.rb b/test/test_tags.rb
-index ae75c024..4bb7c209 100644
+index 10735d51..8c991d27 100644
 --- a/test/test_tags.rb
 +++ b/test/test_tags.rb
 @@ -165,151 +165,6 @@ CONTENT
@@ -371,5 +371,5 @@ index ae75c024..4bb7c209 100644
    end
  end
 -- 
-2.19.1
+2.21.0
 

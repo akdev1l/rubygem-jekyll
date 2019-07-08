@@ -1,7 +1,7 @@
-From 1680f4d8396528583982888448e4d291e6035156 Mon Sep 17 00:00:00 2001
+From 57beb94e2d9ddee960226e708f351d43d8fa90cd Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Wed, 19 Sep 2018 12:17:48 +0200
-Subject: [PATCH 2/9] test/rdiscount: adapt to different TOC generation with
+Subject: [PATCH 02/10] test/rdiscount: adapt to different TOC generation with
  new versions
 
 ---
@@ -34,5 +34,5 @@ index 7116c29a..796ee81d 100644
   </li>
  </ul>
 -- 
-2.19.1
+2.21.0
 

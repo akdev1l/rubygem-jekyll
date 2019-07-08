@@ -2,8 +2,8 @@
 
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
-Version:        3.8.5
-Release:        2%{?dist}
+Version:        3.8.6
+Release:        1%{?dist}
 License:        MIT
 
 URL:            https://github.com/jekyll/jekyll
@@ -11,8 +11,8 @@ Source0:        https://rubygems.org/gems/%{gem_name}-%{version}.gem
 
 # Generated tarball of tests (not present in the gem file)
 # git clone https://github.com/jekyll/jekyll jekyll-repo && pushd jekyll-repo
-# git checkout v3.8.5
-# git archive -o ../jekyll-3.8.5-test.tar.gz v3.8.5 test
+# git checkout v3.8.6
+# git archive -o ../jekyll-3.8.6-test.tar.gz v3.8.6 test
 # popd
 # rm -rf jekyll-repo
 Source1:        %{gem_name}-%{version}-test.tar.gz
@@ -42,6 +42,9 @@ Patch8:         0008-test-coffeescript-disable-tests-requiring-the-coffee.patch
 # Patch to disable tests reliant on the Gemfile and .gemspec file,
 # which are not shipped as part of the jekyll gem:
 Patch9:         0009-test-plugin_manager-disable-tests-requiring-upstream.patch
+
+# Patch to disable broken tests for rouge 2, we have rouge 3 in fedora
+Patch10:        0010-test-tags-disable-broken-tests-for-rouge-2-we-have-r.patch
 
 BuildRequires:  ruby(release)
 BuildRequires:  rubygems-devel
@@ -178,6 +181,10 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
+* Mon Jul 08 2019 Fabio Valentini <decathorpe@gmail.com> - 3.8.6-1
+- Update to version 3.8.6.
+- Ignore broken tests for rouge 2, we have rouge 3 in fedora.
+
 * Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 3.8.5-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 

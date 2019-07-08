@@ -1,7 +1,7 @@
-From bddaed189b88e9da499b5f161f71242843f70ae8 Mon Sep 17 00:00:00 2001
+From a28f8075dcef491a0e057710bda484ea03d80568 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Wed, 19 Sep 2018 12:23:20 +0200
-Subject: [PATCH 7/9] tests/related_posts: disable tests requiring the
+Subject: [PATCH 07/10] tests/related_posts: disable tests requiring the
  classifier-reborn gem
 
 ---
@@ -82,5 +82,5 @@ index d6a8fe6f..00000000
 -  end
 -end
 -- 
-2.19.1
+2.21.0
 
