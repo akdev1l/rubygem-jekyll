@@ -3,7 +3,7 @@
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
 Version:        3.8.6
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        MIT
 
 URL:            https://github.com/jekyll/jekyll
@@ -182,6 +182,9 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
+* Fri Jul 26 2019 Fedora Release Engineering <releng@fedoraproject.org> - 3.8.6-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
 * Mon Jul 08 2019 Fabio Valentini <decathorpe@gmail.com> - 3.8.6-1
 - Update to version 3.8.6.
 - Ignore broken tests for rouge 2, we have rouge 3 in fedora.
