@@ -1,25 +1,26 @@
-From 73113f7408b4f9bb7477d9fc66ef5ce6c4bfdc19 Mon Sep 17 00:00:00 2001
+From 7367c22d8cbb3a4fb7dd519ac79f54b97f695a86 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
-Date: Wed, 19 Sep 2018 12:22:01 +0200
-Subject: [PATCH 04/10] test: disable tests requiring the test theme
+Date: Mon, 26 Aug 2019 10:30:40 +0200
+Subject: [PATCH 3/7] test: disable tests requiring the test theme
 
 ---
- test/test_layout_reader.rb       |  16 ++---
- test/test_site.rb                |  29 ---------
- test/test_theme.rb               |  91 ---------------------------
+ test/test_layout_reader.rb       |   9 ---
+ test/test_site.rb                |  33 ----------
+ test/test_theme.rb               |  85 -------------------------
  test/test_theme_assets_reader.rb | 103 -------------------------------
- 4 files changed, 8 insertions(+), 231 deletions(-)
+ 4 files changed, 230 deletions(-)
  delete mode 100644 test/test_theme.rb
  delete mode 100644 test/test_theme_assets_reader.rb
 
 diff --git a/test/test_layout_reader.rb b/test/test_layout_reader.rb
-index 805bbac8..a16f11df 100644
+index 0ba64ebd..0dfd0fea 100644
 --- a/test/test_layout_reader.rb
 +++ b/test/test_layout_reader.rb
-@@ -69,14 +69,14 @@ class TestLayoutReader < JekyllUnitTest
+@@ -69,15 +69,6 @@ class TestLayoutReader < JekyllUnitTest
+       teardown do
          FileUtils.rm_f(theme_dir("_layouts", "theme-symlink.html"))
        end
- 
+-
 -      should "not read a symlink'd theme" do
 -        skip_if_windows "Jekyll does not currently support symlinks on Windows."
 -
@@ -28,41 +29,33 @@ index 805bbac8..a16f11df 100644
 -        refute layouts.key?("theme-symlink"), \
 -               "Should not read symlinked layout from theme"
 -      end
-+#      should "not read a symlink'd theme" do
-+#        skip_if_windows "Jekyll does not currently support symlinks on Windows."
-+#
-+#        layouts = LayoutReader.new(@site).read
-+#
-+#        refute layouts.key?("theme-symlink"), \
-+#               "Should not read symlinked layout from theme"
-+#      end
      end
    end
  end
 diff --git a/test/test_site.rb b/test/test_site.rb
-index 0af32fcb..7e2ef9e0 100644
+index 70614fde..232b624b 100644
 --- a/test/test_site.rb
 +++ b/test/test_site.rb
-@@ -67,18 +67,6 @@ class TestSite < JekyllUnitTest
-       site = Site.new(site_configuration({ "baseurl" => "/blog" }))
+@@ -68,18 +68,6 @@ class TestSite < JekyllUnitTest
        assert_equal "/blog", site.baseurl
      end
--
+ 
 -    should "only include theme includes_path if the path exists" do
--      site = fixture_site({ "theme" => "test-theme" })
+-      site = fixture_site("theme" => "test-theme")
 -      assert_equal [source_dir("_includes"), theme_dir("_includes")],
--        site.includes_load_paths
+-                   site.includes_load_paths
 -
 -      allow(File).to receive(:directory?).with(theme_dir("_sass")).and_return(true)
 -      allow(File).to receive(:directory?).with(theme_dir("_layouts")).and_return(true)
 -      allow(File).to receive(:directory?).with(theme_dir("_includes")).and_return(false)
--      site = fixture_site({ "theme" => "test-theme" })
+-      site = fixture_site("theme" => "test-theme")
 -      assert_equal [source_dir("_includes")], site.includes_load_paths
 -    end
-   end
-   context "creating sites" do
-     setup do
-@@ -247,14 +235,6 @@ class TestSite < JekyllUnitTest
+-
+     should "configure cache_dir" do
+       fixture_site.process
+       assert File.directory?(source_dir(".jekyll-cache", "Jekyll", "Cache"))
+@@ -259,14 +247,6 @@ class TestSite < JekyllUnitTest
        assert_equal posts.size - @num_invalid_posts, @site.posts.size
      end
  
@@ -77,16 +70,20 @@ index 0af32fcb..7e2ef9e0 100644
      should "read pages with YAML front matter" do
        abs_path = File.expand_path("about.html", @site.source)
        assert_equal true, Utils.has_yaml_header?(abs_path)
-@@ -584,15 +564,6 @@ class TestSite < JekyllUnitTest
+@@ -596,19 +576,6 @@ class TestSite < JekyllUnitTest
            "to use gem-based themes, but got Hash\n"
          assert_includes output, expected_msg
        end
 -
 -      should "set a theme if the config is a string" do
 -        [:debug, :info, :warn, :error].each do |level|
--          expect(Jekyll.logger.writer).not_to receive(level)
+-          if level == :info
+-            expect(Jekyll.logger.writer).to receive(level)
+-          else
+-            expect(Jekyll.logger.writer).not_to receive(level)
+-          end
 -        end
--        site = fixture_site({ "theme" => "test-theme" })
+-        site = fixture_site("theme" => "test-theme")
 -        assert_instance_of Jekyll::Theme, site.theme
 -        assert_equal "test-theme", site.theme.name
 -      end
@@ -95,10 +92,10 @@ index 0af32fcb..7e2ef9e0 100644
      context "with liquid profiling" do
 diff --git a/test/test_theme.rb b/test/test_theme.rb
 deleted file mode 100644
-index bc1f8de6..00000000
+index 4c6fee27..00000000
 --- a/test/test_theme.rb
 +++ /dev/null
-@@ -1,91 +0,0 @@
+@@ -1,85 +0,0 @@
 -# frozen_string_literal: true
 -
 -require "helper"
@@ -126,12 +123,6 @@ index bc1f8de6..00000000
 -      assert_raises Jekyll::Errors::MissingDependencyException do
 -        Theme.new("foo").version
 -      end
--    end
--
--    should "add itself to sass's load path" do
--      @theme.configure_sass
--      message = "Sass load paths should include the theme sass dir"
--      assert Sass.load_paths.include?(@theme.sass_path), message
 -    end
 -  end
 -
@@ -192,7 +183,7 @@ index bc1f8de6..00000000
 -end
 diff --git a/test/test_theme_assets_reader.rb b/test/test_theme_assets_reader.rb
 deleted file mode 100644
-index 983f63b7..00000000
+index 02ce004f..00000000
 --- a/test/test_theme_assets_reader.rb
 +++ /dev/null
 @@ -1,103 +0,0 @@
@@ -237,7 +228,7 @@ index 983f63b7..00000000
 -      file = @site.pages.find { |f| f.relative_path == "assets/style.scss" }
 -      refute_nil file
 -      assert_equal @site.in_dest_dir("assets/style.css"), file.destination(@site.dest)
--      assert_includes file.output, ".sample {\n  color: black; }"
+-      assert_includes file.output, ".sample { color: black; }"
 -    end
 -
 -    should "not overwrite site content with the same relative path" do

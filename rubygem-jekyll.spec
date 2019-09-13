@@ -2,8 +2,8 @@
 
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
-Version:        3.8.6
-Release:        2%{?dist}
+Version:        4.0.0
+Release:        1%{?dist}
 License:        MIT
 
 URL:            https://github.com/jekyll/jekyll
@@ -11,40 +11,35 @@ Source0:        https://rubygems.org/gems/%{gem_name}-%{version}.gem
 
 # Generated tarball of tests (not present in the gem file)
 # git clone https://github.com/jekyll/jekyll jekyll-repo && pushd jekyll-repo
-# git checkout v3.8.6
-# git archive -o ../jekyll-3.8.6-test.tar.gz v3.8.6 test
+# git checkout v4.0.0
+# git archive -o ../jekyll-4.0.0-test.tar.gz v4.0.0 test
 # popd
 # rm -rf jekyll-repo
 Source1:        %{gem_name}-%{version}-test.tar.gz
 
 # Patch the "new" command to skip the "bundle install" step
-Patch0:         0000-jekyll-commands-remove-bundle-install-step-for-new-c.patch
+Patch0:         0000-jekyll-commands-remove-bundle-install-step-for-new.patch
 
 # Patch test helper to disable code coverage and minitest plugins
 Patch1:         0001-test-helper-disable-simplecov-and-minitest-plugins.patch
 
-# Patch to adapt to different rdiscount TOC generation
-Patch2:         0002-test-rdiscount-adapt-to-different-TOC-generation-wit.patch
-
 # Patch to remove (failing) internet connectivity check
-Patch3:         0003-test-utils-remove-internet-connectivity-test.patch
+Patch2:         0002-test-utils-remove-internet-connectivity-test.patch
 
 # Patch to disable broken tests using the "test-theme" theme
-Patch4:         0004-test-disable-tests-requiring-the-test-theme.patch
+Patch3:         0003-test-disable-tests-requiring-the-test-theme.patch
 
 # Patches to remove tests for optional functionality with missing dependencies:
 # classifier-reborn, jekyll-coffeescript, pygments.rb, tomlrb
-Patch5:         0005-tests-configuration-disable-tests-requiring-the-toml.patch
-Patch6:         0006-tests-disable-tests-requiring-the-pygments.rb-gem.patch
-Patch7:         0007-tests-related_posts-disable-tests-requiring-the-clas.patch
-Patch8:         0008-test-coffeescript-disable-tests-requiring-the-coffee.patch
+Patch4:         0004-tests-related_posts-disable-tests-requiring-classifi.patch
+Patch5:         0005-test-coffeescript-disable-tests-requiring-coffeescri.patch
 
 # Patch to disable tests reliant on the Gemfile and .gemspec file,
 # which are not shipped as part of the jekyll gem:
-Patch9:         0009-test-plugin_manager-disable-tests-requiring-upstream.patch
+Patch6:         0006-test-plugin_manager-disable-tests-requiring-gemspec-.patch
 
-# Patch to disable broken tests for rouge 2, we have rouge 3 in fedora
-Patch10:        0010-test-tags-disable-broken-tests-for-rouge-2-we-have-r.patch
+# Patch to disable a race-y test that fails regularly
+Patch7:         0007-test-kramdown-disable-race-y-test.patch
 
 BuildRequires:  ruby(release)
 BuildRequires:  rubygems-devel
@@ -55,24 +50,25 @@ BuildRequires:  help2man
 # gems needed for running the test suite
 BuildRequires:  rubygem(addressable) >= 2.4
 BuildRequires:  rubygem(bundler)
-BuildRequires:  rubygem(coderay)
 BuildRequires:  rubygem(colorator)
 BuildRequires:  rubygem(em-websocket)
 BuildRequires:  rubygem(httpclient)
 BuildRequires:  rubygem(i18n)
-BuildRequires:  rubygem(jekyll-sass-converter)
-BuildRequires:  rubygem(kramdown)
+BuildRequires:  rubygem(jekyll-sass-converter) >= 2.0.0
+BuildRequires:  rubygem(kramdown) >= 2.0.0
+BuildRequires:  rubygem(kramdown-parser-gfm)
+BuildRequires:  rubygem(kramdown-syntax-coderay)
 BuildRequires:  rubygem(liquid) >= 4.0
 BuildRequires:  rubygem(mercenary)
 BuildRequires:  rubygem(minitest)
 BuildRequires:  rubygem(nokogiri)
 BuildRequires:  rubygem(pathutil)
-BuildRequires:  rubygem(rdiscount)
 BuildRequires:  rubygem(rouge)
-BuildRequires:  rubygem(redcarpet)
 BuildRequires:  rubygem(rspec-mocks)
 BuildRequires:  rubygem(safe_yaml)
 BuildRequires:  rubygem(shoulda)
+BuildRequires:  rubygem(terminal-table)
+BuildRequires:  rubygem(tomlrb)
 
 # Additional gems required to run jekyll:
 Requires:       rubygem(bigdecimal)
@@ -120,13 +116,6 @@ Documentation for %{name}.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-
-# Relax dependency constraints on i18n
-%gemspec_remove_dep -g i18n "~> 0.7"
-%gemspec_add_dep -g i18n ">= 0.7"
 
 
 %build
@@ -166,13 +155,13 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 %{_mandir}/man1/jekyll.1*
 
 %dir %{gem_instdir}
-%{gem_instdir}/exe
-%{gem_instdir}/rubocop
+%{gem_instdir}/exe/
 
 %{gem_libdir}
 %{gem_spec}
 
 %exclude %{gem_instdir}/.rubocop.yml
+%exclude %{gem_instdir}/rubocop
 %exclude %{gem_cache}
 
 
@@ -182,6 +171,9 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
+* Fri Sep 13 2019 Fabio Valentini <decathorpe@gmail.com> - 4.0.0-1
+- Update to version 4.0.0.
+
 * Fri Jul 26 2019 Fedora Release Engineering <releng@fedoraproject.org> - 3.8.6-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 

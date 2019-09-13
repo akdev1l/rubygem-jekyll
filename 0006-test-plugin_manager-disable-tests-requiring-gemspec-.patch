@@ -1,15 +1,15 @@
-From 078d2e5451432512fe587fddfbf4c73ecced71e1 Mon Sep 17 00:00:00 2001
+From 63497cb51eac1d1d9e47550eb8c8d238bb851e49 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
-Date: Wed, 19 Sep 2018 12:24:23 +0200
-Subject: [PATCH 09/10] test/plugin_manager: disable tests requiring upstream
- gemspec and Gemfile
+Date: Mon, 26 Aug 2019 10:33:42 +0200
+Subject: [PATCH 6/7] test/plugin_manager: disable tests requiring gemspec and
+ Gemfile
 
 ---
  test/test_plugin_manager.rb | 22 ----------------------
  1 file changed, 22 deletions(-)
 
 diff --git a/test/test_plugin_manager.rb b/test/test_plugin_manager.rb
-index 213bcef6..326c887e 100644
+index b5d1a81c..2ba4e209 100644
 --- a/test/test_plugin_manager.rb
 +++ b/test/test_plugin_manager.rb
 @@ -10,16 +10,6 @@ class TestPluginManager < JekyllUnitTest
@@ -38,7 +38,7 @@ index 213bcef6..326c887e 100644
 -      with_env("JEKYLL_NO_BUNDLER_REQUIRE", nil) do
 -        with_no_gemfile do
 -          refute Jekyll::PluginManager.require_from_bundler,
--                       "Gemfile plugins were required but shouldn't have been"
+-                 "Gemfile plugins were required but shouldn't have been"
 -          assert_nil ENV["JEKYLL_NO_BUNDLER_REQUIRE"]
 -        end
 -      end

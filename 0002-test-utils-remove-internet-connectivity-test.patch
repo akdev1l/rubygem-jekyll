@@ -1,0 +1,27 @@
+From ba51901a2000240fd01218c9f060c9e5e96ad736 Mon Sep 17 00:00:00 2001
+From: Fabio Valentini <decathorpe@gmail.com>
+Date: Mon, 26 Aug 2019 10:27:48 +0200
+Subject: [PATCH 2/7] test/utils: remove internet connectivity test
+
+---
+ test/test_utils.rb | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/test/test_utils.rb b/test/test_utils.rb
+index 8089f006..55edb3b5 100644
+--- a/test/test_utils.rb
++++ b/test/test_utils.rb
+@@ -419,10 +419,4 @@ class TestUtils < JekyllUnitTest
+       assert_equal "bom|another", merged[:encoding]
+     end
+   end
+-
+-  context "Utils::Internet.connected?" do
+-    should "return true if there's internet" do
+-      assert Utils::Internet.connected?
+-    end
+-  end
+ end
+-- 
+2.21.0
+
