@@ -3,7 +3,7 @@
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
 Version:        4.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        MIT
 
 URL:            https://github.com/jekyll/jekyll
@@ -171,6 +171,9 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
+* Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 4.0.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
 * Fri Sep 13 2019 Fabio Valentini <decathorpe@gmail.com> - 4.0.0-1
 - Update to version 4.0.0.
 
