@@ -3,7 +3,7 @@
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
 Version:        4.0.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        MIT
 
 URL:            https://github.com/jekyll/jekyll
@@ -63,6 +63,7 @@ BuildRequires:  rubygem(mercenary)
 BuildRequires:  rubygem(minitest)
 BuildRequires:  rubygem(nokogiri)
 BuildRequires:  rubygem(pathutil)
+BuildRequires:  rubygem(racc)
 BuildRequires:  rubygem(rouge)
 BuildRequires:  rubygem(rspec-mocks)
 BuildRequires:  rubygem(safe_yaml)
@@ -171,6 +172,9 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
+* Fri Jan 31 2020 Fabio Valentini <decathorpe@gmail.com> - 4.0.0-3
+- Add BR: rubygem(racc) to fix FTBFS issue.
+
 * Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 4.0.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
