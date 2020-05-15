@@ -1,4 +1,4 @@
-From ba51901a2000240fd01218c9f060c9e5e96ad736 Mon Sep 17 00:00:00 2001
+From 28c0e5021947c662c98cfcf6b01873b5862580a8 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Mon, 26 Aug 2019 10:27:48 +0200
 Subject: [PATCH 2/7] test/utils: remove internet connectivity test
@@ -23,5 +23,5 @@ index 8089f006..55edb3b5 100644
 -  end
  end
 -- 
-2.21.0
+2.26.2
 

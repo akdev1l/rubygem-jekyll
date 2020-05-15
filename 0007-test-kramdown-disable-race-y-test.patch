@@ -1,31 +1,29 @@
-From 6fd6369c1533b6a951503915f0151de477a086f4 Mon Sep 17 00:00:00 2001
+From 829afea65e38bca3f8fc94db3f323e58d683afe2 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Thu, 29 Aug 2019 01:16:32 +0200
 Subject: [PATCH 7/7] test/kramdown: disable race-y test
 
 ---
- test/test_kramdown.rb | 20 --------------------
- 1 file changed, 20 deletions(-)
+ test/test_kramdown.rb | 18 ------------------
+ 1 file changed, 18 deletions(-)
 
 diff --git a/test/test_kramdown.rb b/test/test_kramdown.rb
-index b4fc3b04..8765a52f 100644
+index 437e2a1c..0ce9bb1b 100644
 --- a/test/test_kramdown.rb
 +++ b/test/test_kramdown.rb
-@@ -86,26 +86,6 @@ class TestKramdown < JekyllUnitTest
+@@ -98,24 +98,6 @@ class TestKramdown < JekyllUnitTest
      end
  
      context "when a custom highlighter is chosen" do
 -      should "use the chosen highlighter if it's available" do
 -        override = {
 -          "highlighter" => nil,
--          "markdown"    => "kramdown",
 -          "kramdown"    => {
--            "syntax_highlighter" => :coderay,
+-            "syntax_highlighter" => "coderay",
 -          },
 -        }
--
--        markdown = Converters::Markdown.new(Utils.deep_merge_hashes(@config, override))
--        result = nokogiri_fragment(markdown.convert(<<~MARKDOWN))
+-        converter = fixture_converter(Utils.deep_merge_hashes(@config, override))
+-        result = nokogiri_fragment(converter.convert(<<~MARKDOWN))
 -          ~~~ruby
 -          puts "Hello World"
 -          ~~~
@@ -37,7 +35,7 @@ index b4fc3b04..8765a52f 100644
 -
        should "support legacy enable_coderay... for now" do
          override = {
-           "markdown" => "kramdown",
+           "kramdown" => {
 -- 
-2.21.0
+2.26.2
 

@@ -1,4 +1,4 @@
-From 7367c22d8cbb3a4fb7dd519ac79f54b97f695a86 Mon Sep 17 00:00:00 2001
+From 5a9b9f3c7d5487bfa8ddd07c018fc615900d8862 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Mon, 26 Aug 2019 10:30:40 +0200
 Subject: [PATCH 3/7] test: disable tests requiring the test theme
@@ -291,5 +291,5 @@ index 02ce004f..00000000
 -  end
 -end
 -- 
-2.21.0
+2.26.2
 

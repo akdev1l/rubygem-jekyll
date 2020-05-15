@@ -2,20 +2,13 @@
 
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
-Version:        4.0.0
-Release:        3%{?dist}
+Version:        4.0.1
+Release:        1%{?dist}
 License:        MIT
 
 URL:            https://github.com/jekyll/jekyll
 Source0:        https://rubygems.org/gems/%{gem_name}-%{version}.gem
-
-# Generated tarball of tests (not present in the gem file)
-# git clone https://github.com/jekyll/jekyll jekyll-repo && pushd jekyll-repo
-# git checkout v4.0.0
-# git archive -o ../jekyll-4.0.0-test.tar.gz v4.0.0 test
-# popd
-# rm -rf jekyll-repo
-Source1:        %{gem_name}-%{version}-test.tar.gz
+Source1:        %{url}/archive/v%{version}/%{gem_name}-%{version}.tar.gz
 
 # Patch the "new" command to skip the "bundle install" step
 Patch0:         0000-jekyll-commands-remove-bundle-install-step-for-new.patch
@@ -107,7 +100,12 @@ Documentation for %{name}.
 
 %prep
 %setup -q -n %{gem_name}-%{version}
-%setup -q -n %{gem_name}-%{version} -a1
+
+# extract test files not shipped with the gem
+mkdir upstream && pushd upstream
+tar -xzvf %{SOURCE1}
+mv %{gem_name}-%{version}/test ../test
+popd && rm -r upstream
 
 %patch0 -p1
 %patch1 -p1
@@ -172,6 +170,9 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
+* Fri May 15 2020 Fabio Valentini <decathorpe@gmail.com> - 4.0.1-1
+- Update to version 4.0.1.
+
 * Fri Jan 31 2020 Fabio Valentini <decathorpe@gmail.com> - 4.0.0-3
 - Add BR: rubygem(racc) to fix FTBFS issue.
 
