@@ -1,4 +1,4 @@
-From 6743175273ca732f023b1668b8ca55a0b5f3aef4 Mon Sep 17 00:00:00 2001
+From 6a66bfe82ac3c55545181090f18276d039da483a Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Mon, 26 Aug 2019 10:33:42 +0200
 Subject: [PATCH 6/7] test/plugin_manager: disable tests requiring gemspec and

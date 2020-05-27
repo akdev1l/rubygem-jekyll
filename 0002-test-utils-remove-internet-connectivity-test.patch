@@ -1,4 +1,4 @@
-From 28c0e5021947c662c98cfcf6b01873b5862580a8 Mon Sep 17 00:00:00 2001
+From 617c05cb3cfc6409edcfd0b3b7f8b8f859c7b6dc Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Mon, 26 Aug 2019 10:27:48 +0200
 Subject: [PATCH 2/7] test/utils: remove internet connectivity test
@@ -8,10 +8,10 @@ Subject: [PATCH 2/7] test/utils: remove internet connectivity test
  1 file changed, 6 deletions(-)
 
 diff --git a/test/test_utils.rb b/test/test_utils.rb
-index 8089f006..55edb3b5 100644
+index 1b3534e4..4ba3ec94 100644
 --- a/test/test_utils.rb
 +++ b/test/test_utils.rb
-@@ -419,10 +419,4 @@ class TestUtils < JekyllUnitTest
+@@ -424,10 +424,4 @@ class TestUtils < JekyllUnitTest
        assert_equal "bom|another", merged[:encoding]
      end
    end

@@ -1,14 +1,15 @@
-From 5a9b9f3c7d5487bfa8ddd07c018fc615900d8862 Mon Sep 17 00:00:00 2001
+From 5b4b084197b10f261de34c64645918e20fdbb219 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
-Date: Mon, 26 Aug 2019 10:30:40 +0200
+Date: Wed, 27 May 2020 15:09:27 +0200
 Subject: [PATCH 3/7] test: disable tests requiring the test theme
 
 ---
  test/test_layout_reader.rb       |   9 ---
+ test/test_liquid_renderer.rb     |  28 ---------
  test/test_site.rb                |  33 ----------
  test/test_theme.rb               |  85 -------------------------
  test/test_theme_assets_reader.rb | 103 -------------------------------
- 4 files changed, 230 deletions(-)
+ 5 files changed, 258 deletions(-)
  delete mode 100644 test/test_theme.rb
  delete mode 100644 test/test_theme_assets_reader.rb
 
@@ -32,11 +33,49 @@ index 0ba64ebd..0dfd0fea 100644
      end
    end
  end
+diff --git a/test/test_liquid_renderer.rb b/test/test_liquid_renderer.rb
+index 40795801..8739ada5 100644
+--- a/test/test_liquid_renderer.rb
++++ b/test/test_liquid_renderer.rb
+@@ -26,33 +26,5 @@ class TestLiquidRenderer < JekyllUnitTest
+         assert_match regexp, output
+       end
+     end
+-
+-    should "normalize paths of rendered items" do
+-      site = fixture_site("theme" => "test-theme")
+-      MockRenderer = Class.new(Jekyll::LiquidRenderer) { public :normalize_path }
+-      renderer = MockRenderer.new(site)
+-
+-      assert_equal "feed.xml", renderer.normalize_path("/feed.xml")
+-      assert_equal(
+-        "_layouts/post.html",
+-        renderer.normalize_path(site.in_source_dir("_layouts", "post.html"))
+-      )
+-      assert_equal(
+-        "test-theme/_layouts/page.html",
+-        renderer.normalize_path(site.in_theme_dir("_layouts", "page.html"))
+-      )
+-      assert_equal(
+-        "my_plugin-0.1.0/lib/my_plugin/layout.html",
+-        renderer.normalize_path(
+-          "/users/jo/blog/vendor/bundle/ruby/2.4.0/gems/my_plugin-0.1.0/lib/my_plugin/layout.html"
+-        )
+-      )
+-      assert_equal(
+-        "test_plugin-0.1.0/lib/test_plugin/layout.html",
+-        renderer.normalize_path(
+-          "C:/Ruby2.4/lib/ruby/gems/2.4.0/gems/test_plugin-0.1.0/lib/test_plugin/layout.html"
+-        )
+-      )
+-    end
+   end
+ end
 diff --git a/test/test_site.rb b/test/test_site.rb
-index 70614fde..232b624b 100644
+index 122490e8..e20be1fe 100644
 --- a/test/test_site.rb
 +++ b/test/test_site.rb
-@@ -68,18 +68,6 @@ class TestSite < JekyllUnitTest
+@@ -64,18 +64,6 @@ class TestSite < JekyllUnitTest
        assert_equal "/blog", site.baseurl
      end
  
@@ -55,7 +94,7 @@ index 70614fde..232b624b 100644
      should "configure cache_dir" do
        fixture_site.process
        assert File.directory?(source_dir(".jekyll-cache", "Jekyll", "Cache"))
-@@ -259,14 +247,6 @@ class TestSite < JekyllUnitTest
+@@ -255,14 +243,6 @@ class TestSite < JekyllUnitTest
        assert_equal posts.size - @num_invalid_posts, @site.posts.size
      end
  
@@ -70,7 +109,7 @@ index 70614fde..232b624b 100644
      should "read pages with YAML front matter" do
        abs_path = File.expand_path("about.html", @site.source)
        assert_equal true, Utils.has_yaml_header?(abs_path)
-@@ -596,19 +576,6 @@ class TestSite < JekyllUnitTest
+@@ -592,19 +572,6 @@ class TestSite < JekyllUnitTest
            "to use gem-based themes, but got Hash\n"
          assert_includes output, expected_msg
        end

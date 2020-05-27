@@ -2,7 +2,7 @@
 
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
-Version:        4.0.1
+Version:        4.1.0
 Release:        1%{?dist}
 License:        MIT
 
@@ -170,6 +170,9 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
+* Wed May 27 2020 Fabio Valentini <decathorpe@gmail.com> - 4.1.0-1
+- Update to version 4.1.0.
+
 * Fri May 15 2020 Fabio Valentini <decathorpe@gmail.com> - 4.0.1-1
 - Update to version 4.0.1.
 

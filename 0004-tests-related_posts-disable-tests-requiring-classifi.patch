@@ -1,4 +1,4 @@
-From ee8909c4d81a969da971280abb5c70ecb87d5d5c Mon Sep 17 00:00:00 2001
+From 585870ee3df88dbf6b200edf91510dbb0e37b491 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Mon, 26 Aug 2019 10:31:44 +0200
 Subject: [PATCH 4/7] tests/related_posts: disable tests requiring

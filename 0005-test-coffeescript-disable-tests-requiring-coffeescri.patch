@@ -1,4 +1,4 @@
-From 34a6e33b9e2b26fd4c2dd5e4ec74d61ce750bdc6 Mon Sep 17 00:00:00 2001
+From 804a42e68dbcd166d0d8b1d07c6918ffae9b04f4 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Mon, 26 Aug 2019 10:32:13 +0200
 Subject: [PATCH 5/7] test/coffeescript: disable tests requiring coffeescript

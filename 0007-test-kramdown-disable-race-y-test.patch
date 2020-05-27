@@ -1,4 +1,4 @@
-From 829afea65e38bca3f8fc94db3f323e58d683afe2 Mon Sep 17 00:00:00 2001
+From 5898eecd0d65e3b4e3d925d9503ce9ad597a1345 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Thu, 29 Aug 2019 01:16:32 +0200
 Subject: [PATCH 7/7] test/kramdown: disable race-y test
@@ -8,10 +8,10 @@ Subject: [PATCH 7/7] test/kramdown: disable race-y test
  1 file changed, 18 deletions(-)
 
 diff --git a/test/test_kramdown.rb b/test/test_kramdown.rb
-index 437e2a1c..0ce9bb1b 100644
+index 02d2b0c0..3f22e8a1 100644
 --- a/test/test_kramdown.rb
 +++ b/test/test_kramdown.rb
-@@ -98,24 +98,6 @@ class TestKramdown < JekyllUnitTest
+@@ -136,24 +136,6 @@ class TestKramdown < JekyllUnitTest
      end
  
      context "when a custom highlighter is chosen" do

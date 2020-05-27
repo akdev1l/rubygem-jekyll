@@ -1,4 +1,4 @@
-From 10ce465747cce22af2d43b835d4f01a8898edafe Mon Sep 17 00:00:00 2001
+From 6b9abfb9cd705c381c7b30f5fa08cfa8ab2d694c Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Mon, 26 Aug 2019 10:25:42 +0200
 Subject: [PATCH 0/7] jekyll/commands: remove "bundle install" step for "new"
@@ -9,7 +9,7 @@ Subject: [PATCH 0/7] jekyll/commands: remove "bundle install" step for "new"
  2 files changed, 1 insertion(+), 39 deletions(-)
 
 diff --git a/lib/jekyll/commands/new.rb b/lib/jekyll/commands/new.rb
-index b8539b10..572b9d9a 100644
+index 4623ddaf..5645d9ec 100644
 --- a/lib/jekyll/commands/new.rb
 +++ b/lib/jekyll/commands/new.rb
 @@ -13,7 +13,6 @@ module Jekyll
