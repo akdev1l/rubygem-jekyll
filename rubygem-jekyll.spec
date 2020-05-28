@@ -3,7 +3,7 @@
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
 Version:        4.1.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        MIT
 
 URL:            https://github.com/jekyll/jekyll
@@ -116,6 +116,10 @@ popd && rm -r upstream
 %patch6 -p1
 %patch7 -p1
 
+# mercenary is too old in fedora (0.3.6 vs. 0.4.0)
+%gemspec_remove_dep -g mercenary "~> 0.4.0"
+%gemspec_add_dep -g mercenary
+
 
 %build
 gem build ../%{gem_name}-%{version}.gemspec
@@ -170,6 +174,9 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
+* Thu May 28 2020 Fabio Valentini <decathorpe@gmail.com> - 4.1.0-2
+- Relax mercenary runtime dependency.
+
 * Wed May 27 2020 Fabio Valentini <decathorpe@gmail.com> - 4.1.0-1
 - Update to version 4.1.0.
 
