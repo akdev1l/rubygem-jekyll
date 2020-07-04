@@ -1,4 +1,4 @@
-From 485cf69fcc5687bd487706d9b2e96f25b2d0409f Mon Sep 17 00:00:00 2001
+From 48d352f637b71e60f13f118f1032fbfd5d707dfb Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Mon, 26 Aug 2019 10:26:59 +0200
 Subject: [PATCH 1/7] test/helper: disable simplecov and minitest plugins
@@ -8,7 +8,7 @@ Subject: [PATCH 1/7] test/helper: disable simplecov and minitest plugins
  1 file changed, 21 deletions(-)
 
 diff --git a/test/helper.rb b/test/helper.rb
-index 33e52f19..d5907546 100644
+index 479cdf9c..1d53f147 100644
 --- a/test/helper.rb
 +++ b/test/helper.rb
 @@ -11,24 +11,10 @@ def jruby?

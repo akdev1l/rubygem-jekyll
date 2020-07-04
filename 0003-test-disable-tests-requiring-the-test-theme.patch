@@ -1,4 +1,4 @@
-From 5b4b084197b10f261de34c64645918e20fdbb219 Mon Sep 17 00:00:00 2001
+From bd3b0cb92c31d7c4e307c44cc5cfc4ea97e39fbf Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Wed, 27 May 2020 15:09:27 +0200
 Subject: [PATCH 3/7] test: disable tests requiring the test theme
@@ -72,7 +72,7 @@ index 40795801..8739ada5 100644
    end
  end
 diff --git a/test/test_site.rb b/test/test_site.rb
-index 122490e8..e20be1fe 100644
+index eabfe346..a4696f23 100644
 --- a/test/test_site.rb
 +++ b/test/test_site.rb
 @@ -64,18 +64,6 @@ class TestSite < JekyllUnitTest
@@ -94,7 +94,7 @@ index 122490e8..e20be1fe 100644
      should "configure cache_dir" do
        fixture_site.process
        assert File.directory?(source_dir(".jekyll-cache", "Jekyll", "Cache"))
-@@ -255,14 +243,6 @@ class TestSite < JekyllUnitTest
+@@ -258,14 +246,6 @@ class TestSite < JekyllUnitTest
        assert_equal posts.size - @num_invalid_posts, @site.posts.size
      end
  
@@ -109,7 +109,7 @@ index 122490e8..e20be1fe 100644
      should "read pages with YAML front matter" do
        abs_path = File.expand_path("about.html", @site.source)
        assert_equal true, Utils.has_yaml_header?(abs_path)
-@@ -592,19 +572,6 @@ class TestSite < JekyllUnitTest
+@@ -595,19 +575,6 @@ class TestSite < JekyllUnitTest
            "to use gem-based themes, but got Hash\n"
          assert_includes output, expected_msg
        end
@@ -131,7 +131,7 @@ index 122490e8..e20be1fe 100644
      context "with liquid profiling" do
 diff --git a/test/test_theme.rb b/test/test_theme.rb
 deleted file mode 100644
-index 4c6fee27..00000000
+index bfbe151f..00000000
 --- a/test/test_theme.rb
 +++ /dev/null
 @@ -1,85 +0,0 @@
@@ -211,7 +211,7 @@ index 4c6fee27..00000000
 -
 -      should "raise when getting theme root" do
 -        error = assert_raises(RuntimeError) { Theme.new("test-non-existent-theme") }
--        assert_match(%r!fixtures\/test-non-existent-theme does not exist!, error.message)
+-        assert_match(%r!fixtures/test-non-existent-theme does not exist!, error.message)
 -      end
 -    end
 -  end

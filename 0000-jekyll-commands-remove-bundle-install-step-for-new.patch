@@ -1,4 +1,4 @@
-From 6b9abfb9cd705c381c7b30f5fa08cfa8ab2d694c Mon Sep 17 00:00:00 2001
+From 6b3e6b9d8e2607b34e8cfa36d81bd44734637cf6 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Mon, 26 Aug 2019 10:25:42 +0200
 Subject: [PATCH 0/7] jekyll/commands: remove "bundle install" step for "new"

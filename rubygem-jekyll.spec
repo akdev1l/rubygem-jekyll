@@ -2,8 +2,8 @@
 
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
-Version:        4.1.0
-Release:        2%{?dist}
+Version:        4.1.1
+Release:        1%{?dist}
 License:        MIT
 
 URL:            https://github.com/jekyll/jekyll
@@ -174,6 +174,9 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
+* Sat Jul 04 2020 Fabio Valentini <decathorpe@gmail.com> - 4.1.1-1
+- Update to version 4.1.1.
+
 * Thu May 28 2020 Fabio Valentini <decathorpe@gmail.com> - 4.1.0-2
 - Relax mercenary runtime dependency.
 

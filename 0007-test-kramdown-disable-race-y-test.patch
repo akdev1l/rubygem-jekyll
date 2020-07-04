@@ -1,4 +1,4 @@
-From 5898eecd0d65e3b4e3d925d9503ce9ad597a1345 Mon Sep 17 00:00:00 2001
+From ae9d8fa12f4e441978def76ffec6fa04478b3060 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Thu, 29 Aug 2019 01:16:32 +0200
 Subject: [PATCH 7/7] test/kramdown: disable race-y test
@@ -8,7 +8,7 @@ Subject: [PATCH 7/7] test/kramdown: disable race-y test
  1 file changed, 18 deletions(-)
 
 diff --git a/test/test_kramdown.rb b/test/test_kramdown.rb
-index 02d2b0c0..3f22e8a1 100644
+index c95f05d8..37bf29eb 100644
 --- a/test/test_kramdown.rb
 +++ b/test/test_kramdown.rb
 @@ -136,24 +136,6 @@ class TestKramdown < JekyllUnitTest
