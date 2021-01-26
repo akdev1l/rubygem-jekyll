@@ -2,8 +2,8 @@
 
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
-Version:        4.1.1
-Release:        3%{?dist}
+Version:        4.2.0
+Release:        1%{?dist}
 License:        MIT
 
 URL:            https://github.com/jekyll/jekyll
@@ -34,9 +34,13 @@ Patch6:         0006-test-plugin_manager-disable-tests-requiring-gemspec-.patch
 # Patch to disable a race-y test that fails regularly
 Patch7:         0007-test-kramdown-disable-race-y-test.patch
 
+# Ruby 3.0 compatibility
+# Upstream fix: https://github.com/jekyll/jekyll/commit/5c797ba136a4d162497e976a1a52946344e6c32f
+Patch8:         0008-test-separate-keyword-arguments.patch
+
 BuildRequires:  ruby(release)
 BuildRequires:  rubygems-devel
-BuildRequires:  ruby >= 2.1.0
+BuildRequires:  ruby >= 2.4.0
 
 BuildRequires:  help2man
 
@@ -62,7 +66,8 @@ BuildRequires:  rubygem(rspec-mocks)
 BuildRequires:  rubygem(safe_yaml)
 BuildRequires:  rubygem(shoulda)
 BuildRequires:  rubygem(terminal-table)
-BuildRequires:  rubygem(tomlrb)
+BuildRequires:  rubygem(tomlrb) >= 2.0.1
+BuildRequires:  rubygem(webrick)
 
 # Additional gems required to run jekyll:
 Requires:       rubygem(bigdecimal)
@@ -115,11 +120,19 @@ popd && rm -r upstream
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 # mercenary is too old in fedora (0.3.6 vs. 0.4.0)
 %gemspec_remove_dep -g mercenary "~> 0.4.0"
-%gemspec_add_dep -g mercenary
+%gemspec_add_dep -g mercenary ">= 0.3.6"
 
+# works with terminal-table 3, too
+%gemspec_remove_dep -g terminal-table "~> 2.0"
+%gemspec_add_dep -g terminal-table ">= 2.0"
+
+# webrick became a normal gem in Ruby 3.0, needs to be added as dependency
+# Upstream fix: https://github.com/jekyll/jekyll/commit/5c797ba136a4d162497e976a1a52946344e6c32f
+%gemspec_add_dep -g webrick "~> 1.7"
 
 %build
 gem build ../%{gem_name}-%{version}.gemspec
@@ -174,6 +187,9 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
+* Mon Feb 15 2021 Otto Urpelainen - 4.2.0-1
+- Update to version 4.2.0.
+
 * Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 4.1.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 

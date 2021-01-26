@@ -34,7 +34,7 @@ index 479cdf9c..1d53f147 100644
 -require "minitest/reporters"
 -require "minitest/profile"
  require "rspec/mocks"
- require_relative "../lib/jekyll.rb"
+ require_relative "../lib/jekyll"
  
 @@ -41,13 +27,6 @@ include Jekyll
  
