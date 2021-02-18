@@ -3,7 +3,7 @@
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
 Version:        4.2.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        MIT
 
 URL:            https://github.com/jekyll/jekyll
@@ -123,12 +123,14 @@ popd && rm -r upstream
 %patch8 -p1
 
 # mercenary is too old in fedora (0.3.6 vs. 0.4.0)
+# Upstream fix: https://github.com/jekyll/jekyll/pull/8586
 %gemspec_remove_dep -g mercenary "~> 0.4.0"
 %gemspec_add_dep -g mercenary ">= 0.3.6"
 
-# works with terminal-table 3, too
+# works with terminal-table 1.8.0 and 3.0.0, too
+# Upstream fix: https://github.com/jekyll/jekyll/pull/8586
 %gemspec_remove_dep -g terminal-table "~> 2.0"
-%gemspec_add_dep -g terminal-table ">= 2.0"
+%gemspec_add_dep -g terminal-table ">= 1.8.0"
 
 # webrick became a normal gem in Ruby 3.0, needs to be added as dependency
 # Upstream fix: https://github.com/jekyll/jekyll/commit/5c797ba136a4d162497e976a1a52946344e6c32f
@@ -187,6 +189,9 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
+* Thu Feb 18 2021 Otto Urpelainen - 4.2.0-2
+- Allow terminal-table 1.8.0
+
 * Mon Feb 15 2021 Otto Urpelainen - 4.2.0-1
 - Update to version 4.2.0.
 
