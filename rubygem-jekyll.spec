@@ -3,7 +3,7 @@
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
 Version:        4.2.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        MIT
 
 URL:            https://github.com/jekyll/jekyll
@@ -122,11 +122,6 @@ popd && rm -r upstream
 %patch7 -p1
 %patch8 -p1
 
-# mercenary is too old in fedora (0.3.6 vs. 0.4.0)
-# Upstream fix: https://github.com/jekyll/jekyll/pull/8586
-%gemspec_remove_dep -g mercenary "~> 0.4.0"
-%gemspec_add_dep -g mercenary ">= 0.3.6"
-
 # works with terminal-table 1.8.0 and 3.0.0, too
 # Upstream fix: https://github.com/jekyll/jekyll/pull/8586
 %gemspec_remove_dep -g terminal-table "~> 2.0"
@@ -189,6 +184,9 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
+* Wed May 26 2021 Otto Urpelainen - 4.2.0-3
+- Remove rubygem-mercenary version requirement patch, not needed anymore
+
 * Thu Feb 18 2021 Otto Urpelainen - 4.2.0-2
 - Allow terminal-table 1.8.0
 
