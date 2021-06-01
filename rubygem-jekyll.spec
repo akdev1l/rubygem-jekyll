@@ -184,13 +184,13 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
-* Wed May 26 2021 Otto Urpelainen - 4.2.0-3
+* Wed May 26 2021 Otto Urpelainen <oturpe@iki.fi> - 4.2.0-3
 - Remove rubygem-mercenary version requirement patch, not needed anymore
 
-* Thu Feb 18 2021 Otto Urpelainen - 4.2.0-2
+* Thu Feb 18 2021 Otto Urpelainen <oturpe@iki.fi> - 4.2.0-2
 - Allow terminal-table 1.8.0
 
-* Mon Feb 15 2021 Otto Urpelainen - 4.2.0-1
+* Mon Feb 15 2021 Otto Urpelainen <oturpe@iki.fi> - 4.2.0-1
 - Update to version 4.2.0.
 
 * Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 4.1.1-3
