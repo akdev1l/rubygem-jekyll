@@ -3,7 +3,7 @@
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
 Version:        4.2.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        MIT
 
 URL:            https://github.com/jekyll/jekyll
@@ -184,6 +184,10 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
+* Tue Jul 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 4.2.0-4
+- Second attempt - Rebuilt for
+  https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
+
 * Wed May 26 2021 Otto Urpelainen <oturpe@iki.fi> - 4.2.0-3
 - Remove rubygem-mercenary version requirement patch, not needed anymore
 
