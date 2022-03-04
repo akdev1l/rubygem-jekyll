@@ -2,8 +2,8 @@
 
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
-Version:        4.2.1
-Release:        2%{?dist}
+Version:        4.2.2
+Release:        1%{?dist}
 License:        MIT
 
 URL:            https://github.com/jekyll/jekyll
@@ -43,7 +43,6 @@ BuildRequires:  rubygems-devel
 BuildRequires:  ruby >= 2.4.0
 
 BuildRequires:  help2man
-BuildRequires:  dos2unix
 
 # gems needed for running the test suite
 BuildRequires:  rubygem(addressable) >= 2.4
@@ -106,14 +105,6 @@ Documentation for %{name}.
 
 %prep
 %setup -q -n %{gem_name}-%{version}
-
-# All files in jekyll-4.2.1 gem have CRLF linebreaks. Convert to LF.
-# Upstream issue: https://github.com/jekyll/jekyll/issues/8826
-if [[ -n $(dos2unix -ic exe/jekyll) ]]; then
-  shopt -s globstar
-  dos2unix -q **
-  shopt -u globstar
-fi
 
 # extract test files not shipped with the gem
 mkdir upstream && pushd upstream
@@ -193,6 +184,10 @@ ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 
 
 %changelog
+* Fri Mar 04 2022 Otto Urpelainen <oturpe@iki.fi> - 4.2.2-1
+- Update to 4.2.2
+- Resolves rhbz#2060372
+
 * Fri Jan 21 2022 Fedora Release Engineering <releng@fedoraproject.org> - 4.2.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
