@@ -1,7 +1,7 @@
-From 6b3e6b9d8e2607b34e8cfa36d81bd44734637cf6 Mon Sep 17 00:00:00 2001
+From 01fb4aae9e72a8535de122aeeb532726567bc6d3 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Mon, 26 Aug 2019 10:25:42 +0200
-Subject: [PATCH 0/7] jekyll/commands: remove "bundle install" step for "new"
+Subject: [PATCH 0/6] jekyll/commands: remove "bundle install" step for "new"
 
 ---
  lib/jekyll/commands/new.rb | 30 +-----------------------------
@@ -9,7 +9,7 @@ Subject: [PATCH 0/7] jekyll/commands: remove "bundle install" step for "new"
  2 files changed, 1 insertion(+), 39 deletions(-)
 
 diff --git a/lib/jekyll/commands/new.rb b/lib/jekyll/commands/new.rb
-index 4623ddaf..5645d9ec 100644
+index 0a00f2634..4fdd93592 100644
 --- a/lib/jekyll/commands/new.rb
 +++ b/lib/jekyll/commands/new.rb
 @@ -13,7 +13,6 @@ module Jekyll
@@ -20,7 +20,7 @@ index 4623ddaf..5645d9ec 100644
  
              c.action do |args, options|
                Jekyll::Commands::New.process(args, options)
-@@ -132,36 +131,9 @@ module Jekyll
+@@ -131,36 +130,9 @@ module Jekyll
            "_posts/0000-00-00-welcome-to-jekyll.markdown.erb"
          end
  
@@ -59,7 +59,7 @@ index 4623ddaf..5645d9ec 100644
        end
      end
 diff --git a/test/test_new_command.rb b/test/test_new_command.rb
-index 7419ec6e..8940679e 100644
+index c71cf4188..79538ab03 100644
 --- a/test/test_new_command.rb
 +++ b/test/test_new_command.rb
 @@ -47,9 +47,7 @@ class TestNewCommand < JekyllUnitTest
@@ -96,5 +96,5 @@ index 7419ec6e..8940679e 100644
  
    context "when multiple args are given" do
 -- 
-2.26.2
+2.37.3
 

@@ -1,7 +1,7 @@
-From 40f9467ce01a4658000dbb524ad9ec49e487c336 Mon Sep 17 00:00:00 2001
+From fbf2537c179bbaefb7638b51e938e8dff8ae3ea5 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Mon, 26 Aug 2019 10:32:13 +0200
-Subject: [PATCH 5/7] test/coffeescript: disable tests requiring coffeescript
+Subject: [PATCH 5/6] test/coffeescript: disable tests requiring coffeescript
 
 ---
  test/test_coffeescript.rb | 49 ---------------------------------------
@@ -10,7 +10,7 @@ Subject: [PATCH 5/7] test/coffeescript: disable tests requiring coffeescript
 
 diff --git a/test/test_coffeescript.rb b/test/test_coffeescript.rb
 deleted file mode 100644
-index 6c6c376b..00000000
+index 6c6c376b2..000000000
 --- a/test/test_coffeescript.rb
 +++ /dev/null
 @@ -1,49 +0,0 @@
@@ -64,5 +64,5 @@ index 6c6c376b..00000000
 -  end
 -end
 -- 
-2.26.2
+2.37.3
 

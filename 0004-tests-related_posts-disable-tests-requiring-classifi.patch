@@ -1,7 +1,7 @@
-From a99073e4e81b7713e16872fe691a67b7a3b355e4 Mon Sep 17 00:00:00 2001
+From 8949c1b4f2606268e68b5b190ce7cc1a102274e8 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Mon, 26 Aug 2019 10:31:44 +0200
-Subject: [PATCH 4/7] tests/related_posts: disable tests requiring
+Subject: [PATCH 4/6] tests/related_posts: disable tests requiring
  classifier-reborn
 
 ---
@@ -11,7 +11,7 @@ Subject: [PATCH 4/7] tests/related_posts: disable tests requiring
 
 diff --git a/test/test_related_posts.rb b/test/test_related_posts.rb
 deleted file mode 100644
-index 7f9a978f..00000000
+index 7f9a978f1..000000000
 --- a/test/test_related_posts.rb
 +++ /dev/null
 @@ -1,66 +0,0 @@
@@ -82,5 +82,5 @@ index 7f9a978f..00000000
 -  end
 -end
 -- 
-2.26.2
+2.37.3
 
