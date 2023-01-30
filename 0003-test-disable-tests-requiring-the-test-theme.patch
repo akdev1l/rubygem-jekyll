@@ -1,7 +1,7 @@
-From 455563380d2edb264190ebbcf1cd2a4cfa0c3699 Mon Sep 17 00:00:00 2001
+From cd9c8724552fe522cf3dfb614bc48e30f8040896 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Wed, 27 May 2020 15:09:27 +0200
-Subject: [PATCH 3/6] test: disable tests requiring the test theme
+Subject: [PATCH 3/8] test: disable tests requiring the test theme
 
 ---
  test/test_layout_reader.rb       |   9 ---
@@ -238,7 +238,7 @@ index 5604a1b36..000000000
 -end
 diff --git a/test/test_theme_assets_reader.rb b/test/test_theme_assets_reader.rb
 deleted file mode 100644
-index f45503e7d..000000000
+index 635cec356..000000000
 --- a/test/test_theme_assets_reader.rb
 +++ /dev/null
 @@ -1,102 +0,0 @@
@@ -282,7 +282,7 @@ index f45503e7d..000000000
 -      file = @site.pages.find { |f| f.relative_path == "assets/style.scss" }
 -      refute_nil file
 -      assert_equal @site.in_dest_dir("assets/style.css"), file.destination(@site.dest)
--      assert_includes file.output, ".sample { color: black; }"
+-      assert_includes file.output, ".sample {\n  color: black;\n}"
 -    end
 -
 -    should "not overwrite site content with the same relative path" do
@@ -464,5 +464,5 @@ index 6ebbcf881..000000000
 -  end
 -end
 -- 
-2.37.3
+2.39.1
 

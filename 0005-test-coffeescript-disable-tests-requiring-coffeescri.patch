@@ -1,7 +1,7 @@
-From fbf2537c179bbaefb7638b51e938e8dff8ae3ea5 Mon Sep 17 00:00:00 2001
+From fe42f7e1a1e759e5b97628d8b6e2883bad30a214 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Mon, 26 Aug 2019 10:32:13 +0200
-Subject: [PATCH 5/6] test/coffeescript: disable tests requiring coffeescript
+Subject: [PATCH 5/8] test/coffeescript: disable tests requiring coffeescript
 
 ---
  test/test_coffeescript.rb | 49 ---------------------------------------
@@ -64,5 +64,5 @@ index 6c6c376b2..000000000
 -  end
 -end
 -- 
-2.37.3
+2.39.1
 

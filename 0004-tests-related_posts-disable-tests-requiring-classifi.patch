@@ -1,7 +1,7 @@
-From 8949c1b4f2606268e68b5b190ce7cc1a102274e8 Mon Sep 17 00:00:00 2001
+From 300c95eae0f833448e83b0fdb0a82866f53a26c4 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Mon, 26 Aug 2019 10:31:44 +0200
-Subject: [PATCH 4/6] tests/related_posts: disable tests requiring
+Subject: [PATCH 4/8] tests/related_posts: disable tests requiring
  classifier-reborn
 
 ---
@@ -82,5 +82,5 @@ index 7f9a978f1..000000000
 -  end
 -end
 -- 
-2.37.3
+2.39.1
 

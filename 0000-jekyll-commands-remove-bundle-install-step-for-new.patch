@@ -1,7 +1,7 @@
-From 01fb4aae9e72a8535de122aeeb532726567bc6d3 Mon Sep 17 00:00:00 2001
+From 7d8f1a3ad2da7d51fdf759c89ed9a20fa36b791d Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Mon, 26 Aug 2019 10:25:42 +0200
-Subject: [PATCH 0/6] jekyll/commands: remove "bundle install" step for "new"
+Subject: [PATCH 0/8] jekyll/commands: remove "bundle install" step for "new"
 
 ---
  lib/jekyll/commands/new.rb | 30 +-----------------------------
@@ -96,5 +96,5 @@ index c71cf4188..79538ab03 100644
  
    context "when multiple args are given" do
 -- 
-2.37.3
+2.39.1
 

@@ -1,0 +1,57 @@
+From 4547dc37515d35b7efe427532a621b3762f54065 Mon Sep 17 00:00:00 2001
+From: Otto Liljalaakso <otto.liljalaakso@iki.fi>
+Date: Mon, 30 Jan 2023 07:03:34 +0200
+Subject: [PATCH 7/8] Revert tests to expect jekyll-sass-converter 2
+
+Fedora's jekyll-sass-converter remains at major version 2,
+see rhbz#2155533 for details. Thus, Jekyll's tests still need
+to still test against version 2.
+
+This partially reverts commit 868d96948beef435349d14ff2e175edee13005d5.
+Non-reverted parts are feature tests, which are not used in Fedora
+packaging at all.
+---
+ test/test_filters.rb | 4 ++--
+ test/test_sass.rb    | 4 +---
+ 2 files changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/test/test_filters.rb b/test/test_filters.rb
+index ea82fc5b5..176e5ed6d 100644
+--- a/test/test_filters.rb
++++ b/test/test_filters.rb
+@@ -143,7 +143,7 @@ class TestFilters < JekyllUnitTest
+ 
+     should "sassify with simple string" do
+       assert_equal(
+-        "p {\n  color: #123456;\n}",
++        "p { color: #123456; }\n",
+         @filter.sassify(<<~SASS)
+           $blue: #123456
+           p
+@@ -154,7 +154,7 @@ class TestFilters < JekyllUnitTest
+ 
+     should "scssify with simple string" do
+       assert_equal(
+-        "p {\n  color: #123456;\n}",
++        "p { color: #123456; }\n",
+         @filter.scssify("$blue:#123456; p{color: $blue}")
+       )
+     end
+diff --git a/test/test_sass.rb b/test/test_sass.rb
+index 3d930d00a..372cdedbb 100644
+--- a/test/test_sass.rb
++++ b/test/test_sass.rb
+@@ -15,9 +15,7 @@ class TestSass < JekyllUnitTest
+ 
+     should "import SCSS partial" do
+       result = <<~CSS
+-        .half {
+-          width: 50%;
+-        }
++        .half { width: 50%; }
+ 
+         /*# sourceMappingURL=main.css.map */
+       CSS
+-- 
+2.39.1
+

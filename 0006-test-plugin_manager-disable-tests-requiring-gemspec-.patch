@@ -1,7 +1,7 @@
-From 31a7220223b27d598281303188e8bc4edf40d603 Mon Sep 17 00:00:00 2001
+From 7ed37ffbf3fca11ca4d150636138669d58e19daa Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Mon, 26 Aug 2019 10:33:42 +0200
-Subject: [PATCH 6/6] test/plugin_manager: disable tests requiring gemspec and
+Subject: [PATCH 6/8] test/plugin_manager: disable tests requiring gemspec and
  Gemfile
 
 ---
@@ -64,5 +64,5 @@ index a7b9359e2..a7f9f7187 100644
      should "invoke `require_with_graceful_fail`" do
        gems = %w(jemojii foobar)
 -- 
-2.37.3
+2.39.1
 

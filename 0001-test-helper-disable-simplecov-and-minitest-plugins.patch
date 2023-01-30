@@ -1,7 +1,7 @@
-From e1eb18e2b1fd237effd67280c463d88030eef55f Mon Sep 17 00:00:00 2001
+From 6b68df9ddbd9cf42c226f1158cd91b63965a3419 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Mon, 26 Aug 2019 10:26:59 +0200
-Subject: [PATCH 1/6] test/helper: disable simplecov and minitest plugins
+Subject: [PATCH 1/8] test/helper: disable simplecov and minitest plugins
 
 ---
  test/helper.rb | 21 ---------------------
@@ -51,5 +51,5 @@ index 7b1a2b4b4..f4adaa2fd 100644
    def assert_exist(filename, msg = nil)
      msg = message(msg) { "Expected '#{filename}' to exist" }
 -- 
-2.37.3
+2.39.1
 

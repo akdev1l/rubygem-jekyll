@@ -2,7 +2,7 @@
 
 Name:           rubygem-%{gem_name}
 Summary:        Simple, blog aware, static site generator
-Version:        4.3.1
+Version:        4.3.2
 Release:        %autorelease
 License:        MIT
 
@@ -16,8 +16,9 @@ Patch:          0003-test-disable-tests-requiring-the-test-theme.patch
 Patch:          0004-tests-related_posts-disable-tests-requiring-classifi.patch
 Patch:          0005-test-coffeescript-disable-tests-requiring-coffeescri.patch
 Patch:          0006-test-plugin_manager-disable-tests-requiring-gemspec-.patch
-# https://github.com/jekyll/jekyll/pull/9237
-Patch:          0007-pr9237-ruby32-hash-for-Struct-initializer.patch
+Patch:          0007-Revert-tests-to-expect-jekyll-sass-converter-2.patch
+# https://github.com/jekyll/jekyll/pull/9285
+Patch:          0008-test-use-hash-explicitly-for-Struct-initializer-for-.patch
 
 BuildRequires:  ruby(release)
 BuildRequires:  rubygems-devel
