@@ -1,7 +1,7 @@
-From cd9c8724552fe522cf3dfb614bc48e30f8040896 Mon Sep 17 00:00:00 2001
+From fda323adda89ce37864e5c3dce46efb14282b3a9 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Wed, 27 May 2020 15:09:27 +0200
-Subject: [PATCH 3/8] test: disable tests requiring the test theme
+Subject: [PATCH 3/7] test: disable tests requiring the test theme
 
 ---
  test/test_layout_reader.rb       |   9 ---
@@ -10,8 +10,8 @@ Subject: [PATCH 3/8] test: disable tests requiring the test theme
  test/test_theme.rb               |  85 --------------------------
  test/test_theme_assets_reader.rb | 102 -------------------------------
  test/test_theme_data_reader.rb   |  70 ---------------------
- test/test_theme_drop.rb          |  34 -----------
- 7 files changed, 367 deletions(-)
+ test/test_theme_drop.rb          |  51 ----------------
+ 7 files changed, 384 deletions(-)
  delete mode 100644 test/test_theme.rb
  delete mode 100644 test/test_theme_assets_reader.rb
  delete mode 100644 test/test_theme_drop.rb
@@ -425,10 +425,10 @@ index 15802699c..be708c8ee 100644
  end
 diff --git a/test/test_theme_drop.rb b/test/test_theme_drop.rb
 deleted file mode 100644
-index 6ebbcf881..000000000
+index cd2dd830a..000000000
 --- a/test/test_theme_drop.rb
 +++ /dev/null
-@@ -1,34 +0,0 @@
+@@ -1,51 +0,0 @@
 -# frozen_string_literal: true
 -
 -require "helper"
@@ -453,7 +453,7 @@ index 6ebbcf881..000000000
 -        "dependencies" => [],
 -        "description"  => "This is a theme used to test Jekyll",
 -        "metadata"     => {},
--        "root"         => theme_dir,
+-        "root"         => "",
 -        "version"      => "0.1.0",
 -      }
 -      expected.each_key do |key|
@@ -461,8 +461,25 @@ index 6ebbcf881..000000000
 -        assert_equal expected[key], @drop[key]
 -      end
 -    end
+-
+-    should "render gem root only in development mode" do
+-      with_env("JEKYLL_ENV", nil) do
+-        drop = fixture_site("theme" => "test-theme").to_liquid.theme
+-        assert_equal "", drop["root"]
+-      end
+-
+-      with_env("JEKYLL_ENV", "development") do
+-        drop = fixture_site("theme" => "test-theme").to_liquid.theme
+-        assert_equal theme_dir, drop["root"]
+-      end
+-
+-      with_env("JEKYLL_ENV", "production") do
+-        drop = fixture_site("theme" => "test-theme").to_liquid.theme
+-        assert_equal "", drop["root"]
+-      end
+-    end
 -  end
 -end
 -- 
-2.39.1
+2.46.0
 
