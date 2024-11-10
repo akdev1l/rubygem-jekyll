@@ -31,6 +31,7 @@ BuildRequires:  help2man
 BuildRequires:  rubygem(addressable) >= 2.4
 BuildRequires:  rubygem(bundler)
 BuildRequires:  rubygem(colorator)
+BuildRequires:  rubygem(csv)
 BuildRequires:  rubygem(em-websocket)
 BuildRequires:  rubygem(httpclient)
 BuildRequires:  rubygem(i18n)
@@ -58,6 +59,7 @@ BuildRequires:  rubygem(webrick)
 # Additional gems required to run jekyll:
 Requires:       rubygem(bigdecimal)
 Requires:       rubygem(bundler)
+Requires:       rubygem(csv)
 Requires:       rubygem(json)
 
 # Additional gems needed to actually deploy jekyll with default settings:
