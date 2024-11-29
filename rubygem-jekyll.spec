@@ -20,6 +20,10 @@ Patch:          0007-Revert-tests-to-expect-jekyll-sass-converter-2.patch
 # Use `shoulda-context` in place of `shoulda` to reduce dependency chain.
 # https://github.com/jekyll/jekyll/pull/9441
 Patch:          0009-Test-suite-uses-shoulda-context-only-.patch
+# https://github.com/jekyll/jekyll/issues/9721
+# Workaround for ruby3.4 Hash#inspect formatting change on testsuite
+Patch:          0010-issue9721-ruby34-formatting-change.patch
+
 
 BuildRequires:  ruby(release)
 BuildRequires:  rubygems-devel
