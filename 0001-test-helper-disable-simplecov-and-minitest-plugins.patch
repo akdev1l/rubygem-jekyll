@@ -1,14 +1,11 @@
-From 6b68df9ddbd9cf42c226f1158cd91b63965a3419 Mon Sep 17 00:00:00 2001
+From d0015b5d82fb67dbf271d701d0d53364dff42736 Mon Sep 17 00:00:00 2001
 From: Fabio Valentini <decathorpe@gmail.com>
 Date: Mon, 26 Aug 2019 10:26:59 +0200
-Subject: [PATCH 1/8] test/helper: disable simplecov and minitest plugins
+Subject: [PATCH] test/helper: disable simplecov and minitest plugins
 
----
- test/helper.rb | 21 ---------------------
- 1 file changed, 21 deletions(-)
 
 diff --git a/test/helper.rb b/test/helper.rb
-index 7b1a2b4b4..f4adaa2fd 100644
+index f6b1f9251..284fadbc3 100644
 --- a/test/helper.rb
 +++ b/test/helper.rb
 @@ -11,24 +11,10 @@ def jruby?
@@ -51,5 +48,5 @@ index 7b1a2b4b4..f4adaa2fd 100644
    def assert_exist(filename, msg = nil)
      msg = message(msg) { "Expected '#{filename}' to exist" }
 -- 
-2.39.1
+2.48.1
 
