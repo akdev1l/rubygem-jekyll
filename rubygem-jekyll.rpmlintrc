@@ -1,2 +1,0 @@
-# false positives
-addFilter("E: version-control-internal-file /usr/share/gems/gems/jekyll-*")
