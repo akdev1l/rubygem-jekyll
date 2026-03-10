@@ -1,0 +1,485 @@
+From fda323adda89ce37864e5c3dce46efb14282b3a9 Mon Sep 17 00:00:00 2001
+From: Fabio Valentini <decathorpe@gmail.com>
+Date: Wed, 27 May 2020 15:09:27 +0200
+Subject: [PATCH 3/7] test: disable tests requiring the test theme
+
+---
+ test/test_layout_reader.rb       |   9 ---
+ test/test_liquid_renderer.rb     |  28 ---------
+ test/test_site.rb                |  39 ------------
+ test/test_theme.rb               |  85 --------------------------
+ test/test_theme_assets_reader.rb | 102 -------------------------------
+ test/test_theme_data_reader.rb   |  70 ---------------------
+ test/test_theme_drop.rb          |  51 ----------------
+ 7 files changed, 384 deletions(-)
+ delete mode 100644 test/test_theme.rb
+ delete mode 100644 test/test_theme_assets_reader.rb
+ delete mode 100644 test/test_theme_drop.rb
+
+diff --git a/test/test_layout_reader.rb b/test/test_layout_reader.rb
+index 0ba64ebd7..0dfd0fea9 100644
+--- a/test/test_layout_reader.rb
++++ b/test/test_layout_reader.rb
+@@ -69,15 +69,6 @@ class TestLayoutReader < JekyllUnitTest
+       teardown do
+         FileUtils.rm_f(theme_dir("_layouts", "theme-symlink.html"))
+       end
+-
+-      should "not read a symlink'd theme" do
+-        skip_if_windows "Jekyll does not currently support symlinks on Windows."
+-
+-        layouts = LayoutReader.new(@site).read
+-
+-        refute layouts.key?("theme-symlink"), \
+-               "Should not read symlinked layout from theme"
+-      end
+     end
+   end
+ end
+diff --git a/test/test_liquid_renderer.rb b/test/test_liquid_renderer.rb
+index 40795801f..8739ada54 100644
+--- a/test/test_liquid_renderer.rb
++++ b/test/test_liquid_renderer.rb
+@@ -26,33 +26,5 @@ class TestLiquidRenderer < JekyllUnitTest
+         assert_match regexp, output
+       end
+     end
+-
+-    should "normalize paths of rendered items" do
+-      site = fixture_site("theme" => "test-theme")
+-      MockRenderer = Class.new(Jekyll::LiquidRenderer) { public :normalize_path }
+-      renderer = MockRenderer.new(site)
+-
+-      assert_equal "feed.xml", renderer.normalize_path("/feed.xml")
+-      assert_equal(
+-        "_layouts/post.html",
+-        renderer.normalize_path(site.in_source_dir("_layouts", "post.html"))
+-      )
+-      assert_equal(
+-        "test-theme/_layouts/page.html",
+-        renderer.normalize_path(site.in_theme_dir("_layouts", "page.html"))
+-      )
+-      assert_equal(
+-        "my_plugin-0.1.0/lib/my_plugin/layout.html",
+-        renderer.normalize_path(
+-          "/users/jo/blog/vendor/bundle/ruby/2.4.0/gems/my_plugin-0.1.0/lib/my_plugin/layout.html"
+-        )
+-      )
+-      assert_equal(
+-        "test_plugin-0.1.0/lib/test_plugin/layout.html",
+-        renderer.normalize_path(
+-          "C:/Ruby2.4/lib/ruby/gems/2.4.0/gems/test_plugin-0.1.0/lib/test_plugin/layout.html"
+-        )
+-      )
+-    end
+   end
+ end
+diff --git a/test/test_site.rb b/test/test_site.rb
+index 7556174d0..478bcc3e9 100644
+--- a/test/test_site.rb
++++ b/test/test_site.rb
+@@ -64,18 +64,6 @@ class TestSite < JekyllUnitTest
+       assert_equal "/blog", site.baseurl
+     end
+ 
+-    should "only include theme includes_path if the path exists" do
+-      site = fixture_site("theme" => "test-theme")
+-      assert_equal [source_dir("_includes"), theme_dir("_includes")],
+-                   site.includes_load_paths
+-
+-      allow(File).to receive(:directory?).with(theme_dir("_sass")).and_return(true)
+-      allow(File).to receive(:directory?).with(theme_dir("_layouts")).and_return(true)
+-      allow(File).to receive(:directory?).with(theme_dir("_includes")).and_return(false)
+-      site = fixture_site("theme" => "test-theme")
+-      assert_equal [source_dir("_includes")], site.includes_load_paths
+-    end
+-
+     should "configure cache_dir" do
+       fixture_site.process
+       assert File.directory?(source_dir(".jekyll-cache", "Jekyll", "Cache"))
+@@ -97,12 +85,6 @@ class TestSite < JekyllUnitTest
+       )
+     end
+ 
+-    should "load config file from theme-gem as Jekyll::Configuration instance" do
+-      site = fixture_site("theme" => "test-theme")
+-      assert_instance_of Jekyll::Configuration, site.config
+-      assert_equal "Hello World", site.config["title"]
+-    end
+-
+     context "with a custom cache_dir configuration" do
+       should "have the custom cache_dir hidden from Git" do
+         site = fixture_site("cache_dir" => "../../custom-cache-dir")
+@@ -288,14 +270,6 @@ class TestSite < JekyllUnitTest
+       assert_equal posts.size - @num_invalid_posts, @site.posts.size
+     end
+ 
+-    should "skip posts with invalid encoding" do
+-      with_image_as_post do
+-        posts = read_posts
+-        num_invalid_posts = @num_invalid_posts + 1
+-        assert_equal posts.size - num_invalid_posts, @site.posts.size
+-      end
+-    end
+-
+     should "read pages with YAML front matter" do
+       abs_path = File.expand_path("about.html", @site.source)
+       assert Utils.has_yaml_header?(abs_path)
+@@ -625,19 +599,6 @@ class TestSite < JekyllUnitTest
+                        "gem-based themes, but got Hash\n"
+         assert_includes output, expected_msg
+       end
+-
+-      should "set a theme if the config is a string" do
+-        [:debug, :info, :warn, :error].each do |level|
+-          if level == :info
+-            expect(Jekyll.logger.writer).to receive(level)
+-          else
+-            expect(Jekyll.logger.writer).not_to receive(level)
+-          end
+-        end
+-        site = fixture_site("theme" => "test-theme")
+-        assert_instance_of Jekyll::Theme, site.theme
+-        assert_equal "test-theme", site.theme.name
+-      end
+     end
+ 
+     context "with liquid profiling" do
+diff --git a/test/test_theme.rb b/test/test_theme.rb
+deleted file mode 100644
+index 5604a1b36..000000000
+--- a/test/test_theme.rb
++++ /dev/null
+@@ -1,85 +0,0 @@
+-# frozen_string_literal: true
+-
+-require "helper"
+-
+-class TestTheme < JekyllUnitTest
+-  def setup
+-    @theme = Theme.new("test-theme")
+-  end
+-
+-  context "initializing" do
+-    should "normalize the theme name" do
+-      theme = Theme.new(" Test-Theme ")
+-      assert_equal "test-theme", theme.name
+-    end
+-
+-    should "know the theme root" do
+-      assert_equal theme_dir, @theme.root
+-    end
+-
+-    should "know the theme version" do
+-      assert_equal Gem::Version.new("0.1.0"), @theme.version
+-    end
+-
+-    should "raise an error for invalid themes" do
+-      assert_raises Jekyll::Errors::MissingDependencyException do
+-        Theme.new("foo").version
+-      end
+-    end
+-  end
+-
+-  context "path generation" do
+-    [:assets, :_data, :_layouts, :_includes, :_sass].each do |folder|
+-      should "know the #{folder} path" do
+-        expected = theme_dir(folder.to_s)
+-        assert_equal expected, @theme.public_send("#{folder.to_s.tr("_", "")}_path")
+-      end
+-    end
+-
+-    should "generate folder paths" do
+-      expected = theme_dir("_sass")
+-      assert_equal expected, @theme.send(:path_for, :_sass)
+-    end
+-
+-    should "not allow paths outside of the theme root" do
+-      assert_nil @theme.send(:path_for, "../../source")
+-    end
+-
+-    should "return nil for paths that don't exist" do
+-      assert_nil @theme.send(:path_for, "foo")
+-    end
+-
+-    should "return the resolved path when a symlink & resolved path exists" do
+-      # no support for symlinks on Windows
+-      skip_if_windows "Jekyll does not currently support symlinks on Windows."
+-
+-      expected = theme_dir("_layouts")
+-      assert_equal expected, @theme.send(:path_for, :_symlink)
+-    end
+-  end
+-
+-  context "invalid theme" do
+-    context "initializing" do
+-      setup do
+-        stub_gemspec = Object.new
+-
+-        # the directory for this theme should not exist
+-        allow(stub_gemspec).to receive(:full_gem_path)
+-          .and_return(File.expand_path("test/fixtures/test-non-existent-theme", __dir__))
+-
+-        allow(Gem::Specification).to receive(:find_by_name)
+-          .with("test-non-existent-theme")
+-          .and_return(stub_gemspec)
+-      end
+-
+-      should "raise when getting theme root" do
+-        error = assert_raises(RuntimeError) { Theme.new("test-non-existent-theme") }
+-        assert_match(%r!fixtures/test-non-existent-theme does not exist!, error.message)
+-      end
+-    end
+-  end
+-
+-  should "retrieve the gemspec" do
+-    assert_equal "test-theme-0.1.0", @theme.send(:gemspec).full_name
+-  end
+-end
+diff --git a/test/test_theme_assets_reader.rb b/test/test_theme_assets_reader.rb
+deleted file mode 100644
+index 635cec356..000000000
+--- a/test/test_theme_assets_reader.rb
++++ /dev/null
+@@ -1,102 +0,0 @@
+-# frozen_string_literal: true
+-
+-require "helper"
+-
+-class TestThemeAssetsReader < JekyllUnitTest
+-  def setup
+-    @site = fixture_site(
+-      "theme"       => "test-theme",
+-      "theme-color" => "black"
+-    )
+-    assert @site.theme
+-  end
+-
+-  def assert_file_with_relative_path(haystack, relative_path)
+-    assert haystack.any? { |f|
+-      f.relative_path == relative_path
+-    }, "Site should read in the #{relative_path} file, but it was not found in #{haystack.inspect}"
+-  end
+-
+-  def refute_file_with_relative_path(haystack, relative_path)
+-    refute haystack.any? { |f|
+-      f.relative_path == relative_path
+-    }, "Site should not have read in the #{relative_path} file, but it was found in " \
+-       "#{haystack.inspect}"
+-  end
+-
+-  context "with a valid theme" do
+-    should "read all assets" do
+-      @site.reset
+-      ThemeAssetsReader.new(@site).read
+-      assert_file_with_relative_path @site.static_files, "/assets/img/logo.png"
+-      assert_file_with_relative_path @site.pages, "assets/style.scss"
+-    end
+-
+-    should "convert pages" do
+-      @site.process
+-
+-      file = @site.pages.find { |f| f.relative_path == "assets/style.scss" }
+-      refute_nil file
+-      assert_equal @site.in_dest_dir("assets/style.css"), file.destination(@site.dest)
+-      assert_includes file.output, ".sample {\n  color: black;\n}"
+-    end
+-
+-    should "not overwrite site content with the same relative path" do
+-      @site.reset
+-      @site.read
+-
+-      file = @site.pages.find { |f| f.relative_path == "assets/application.coffee" }
+-      static_script = File.read(
+-        @site.static_files.find { |f| f.relative_path == "/assets/base.js" }.path
+-      )
+-      refute_nil file
+-      refute_nil static_script
+-      assert_includes file.content, "alert \"From your site.\""
+-      assert_includes static_script, "alert(\"From your site.\");"
+-    end
+-  end
+-
+-  context "with a valid theme without an assets dir" do
+-    should "not read any assets" do
+-      site = fixture_site("theme" => "test-theme")
+-      allow(site.theme).to receive(:assets_path).and_return(nil)
+-      ThemeAssetsReader.new(site).read
+-      refute_file_with_relative_path site.static_files, "/assets/img/logo.png"
+-      refute_file_with_relative_path site.pages, "assets/style.scss"
+-    end
+-  end
+-
+-  context "with no theme" do
+-    should "not read any assets" do
+-      site = fixture_site("theme" => nil)
+-      ThemeAssetsReader.new(site).read
+-      refute_file_with_relative_path site.static_files, "/assets/img/logo.png"
+-      refute_file_with_relative_path site.pages, "assets/style.scss"
+-    end
+-  end
+-
+-  context "symlinked theme" do
+-    should "not read assets from symlinked theme" do
+-      skip_if_windows "Jekyll does not currently support symlinks on Windows."
+-
+-      begin
+-        tmp_dir = Dir.mktmpdir("jekyll-theme-test")
+-        File.binwrite(File.join(tmp_dir, "test.txt"), "content")
+-
+-        theme_dir = File.join(__dir__, "fixtures", "test-theme-symlink")
+-        File.symlink(tmp_dir, File.join(theme_dir, "assets"))
+-
+-        site = fixture_site(
+-          "theme"       => "test-theme-symlink",
+-          "theme-color" => "black"
+-        )
+-        ThemeAssetsReader.new(site).read
+-
+-        assert_empty site.static_files, "static file should not have been picked up"
+-      ensure
+-        FileUtils.rm_rf(tmp_dir)
+-        FileUtils.rm_rf(File.join(theme_dir, "assets"))
+-      end
+-    end
+-  end
+-end
+diff --git a/test/test_theme_data_reader.rb b/test/test_theme_data_reader.rb
+index 15802699c..be708c8ee 100644
+--- a/test/test_theme_data_reader.rb
++++ b/test/test_theme_data_reader.rb
+@@ -17,74 +17,4 @@ class TestThemeDataReader < JekyllUnitTest
+     end
+   end
+ 
+-  context "site with a theme without _data" do
+-    setup do
+-      @site = fixture_site("theme" => "test-theme-skinny")
+-      @site.reader.read_data
+-      assert @site.data["greetings"]
+-      assert @site.data["categories"]["dairy"]
+-    end
+-
+-    should "should read data from source" do
+-      assert_equal "Hello! I’m foo. And who are you?", @site.data["greetings"]["foo"]
+-      assert_equal "Dairy", @site.data["categories"]["dairy"]["name"]
+-    end
+-  end
+-
+-  context "site with a theme with empty _data directory" do
+-    setup do
+-      @site = fixture_site("theme" => "test-theme-w-empty-data")
+-      @site.reader.read_data
+-      assert @site.data["greetings"]
+-      assert @site.data["categories"]["dairy"]
+-    end
+-
+-    should "should read data from source" do
+-      assert_equal "Hello! I’m foo. And who are you?", @site.data["greetings"]["foo"]
+-      assert_equal "Dairy", @site.data["categories"]["dairy"]["name"]
+-    end
+-  end
+-
+-  context "site with a theme with data at root of _data" do
+-    setup do
+-      @site = fixture_site("theme" => "test-theme")
+-      @site.reader.read_data
+-      assert @site.data["greetings"]
+-      assert @site.data["categories"]["dairy"]
+-      assert @site.data["cars"]
+-    end
+-
+-    should "should merge nested keys" do
+-      refute_equal "Hello! I’m bar. What’s up so far?", @site.data["greetings"]["foo"]
+-      assert_equal "Hello! I’m foo. And who are you?", @site.data["greetings"]["foo"]
+-      assert_equal "Mercedes", @site.data["cars"]["manufacturer"]
+-    end
+-  end
+-
+-  context "site with a theme with data at root of _data and in a subdirectory" do
+-    setup do
+-      @site = fixture_site("theme" => "test-theme")
+-      @site.reader.read_data
+-      assert @site.data["greetings"]
+-      assert @site.data["categories"]["dairy"]
+-      assert @site.data["cars"]
+-    end
+-
+-    should "should merge nested keys" do
+-      refute_equal "Cheese Dairy", @site.data["categories"]["dairy"]["name"]
+-      expected_names = %w(cheese milk)
+-      product_names  = @site.data["categories"]["dairy"]["products"].map do |product|
+-        product["name"]
+-      end
+-      expected_names.each do |expected_name|
+-        assert_includes product_names, expected_name
+-      end
+-      assert_equal "Dairy", @site.data["categories"]["dairy"]["name"]
+-    end
+-
+-    should "should illustrate the documented sample" do
+-      assert_equal "Kundenstimmen", @site.data["i18n"]["testimonials"]["header"]
+-      assert_equal "Design by FTC", @site.data["i18n"]["testimonials"]["footer"]
+-    end
+-  end
+ end
+diff --git a/test/test_theme_drop.rb b/test/test_theme_drop.rb
+deleted file mode 100644
+index cd2dd830a..000000000
+--- a/test/test_theme_drop.rb
++++ /dev/null
+@@ -1,51 +0,0 @@
+-# frozen_string_literal: true
+-
+-require "helper"
+-
+-class TestThemeDrop < JekyllUnitTest
+-  should "be initialized only for gem-based themes" do
+-    assert_nil fixture_site.to_liquid.theme
+-  end
+-
+-  context "a theme drop" do
+-    setup do
+-      @drop = fixture_site("theme" => "test-theme").to_liquid.theme
+-    end
+-
+-    should "respond to `key?`" do
+-      assert_respond_to @drop, :key?
+-    end
+-
+-    should "export relevant data to Liquid templates" do
+-      expected = {
+-        "authors"      => "Jekyll",
+-        "dependencies" => [],
+-        "description"  => "This is a theme used to test Jekyll",
+-        "metadata"     => {},
+-        "root"         => "",
+-        "version"      => "0.1.0",
+-      }
+-      expected.each_key do |key|
+-        assert @drop.key?(key)
+-        assert_equal expected[key], @drop[key]
+-      end
+-    end
+-
+-    should "render gem root only in development mode" do
+-      with_env("JEKYLL_ENV", nil) do
+-        drop = fixture_site("theme" => "test-theme").to_liquid.theme
+-        assert_equal "", drop["root"]
+-      end
+-
+-      with_env("JEKYLL_ENV", "development") do
+-        drop = fixture_site("theme" => "test-theme").to_liquid.theme
+-        assert_equal theme_dir, drop["root"]
+-      end
+-
+-      with_env("JEKYLL_ENV", "production") do
+-        drop = fixture_site("theme" => "test-theme").to_liquid.theme
+-        assert_equal "", drop["root"]
+-      end
+-    end
+-  end
+-end
+-- 
+2.46.0
+
