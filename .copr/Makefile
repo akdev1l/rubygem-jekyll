@@ -4,4 +4,4 @@ srpm:
 		--spec $(spec) \
 		--with bootstrap \
 		--outdir $(outdir)
-	ls
+	ls -l $(outdir) $(PWD)
