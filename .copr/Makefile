@@ -4,3 +4,4 @@ srpm:
 		--spec $(spec) \
 		--with bootstrap \
 		--outdir $(outdir)
+	ls
