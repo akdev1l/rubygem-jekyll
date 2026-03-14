@@ -1,8 +1,4 @@
-%if %(echo "${COPR_PACKAGE:-}" | grep -c bootstrap)
 %bcond_without bootstrap
-%else
-%bcond_with bootstrap
-%endif
 %global gem_name jekyll
 
 Name:           rubygem-%{gem_name}
