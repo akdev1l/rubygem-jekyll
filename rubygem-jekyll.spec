@@ -20,7 +20,6 @@ Patch:          0006-test-plugin_manager-disable-tests-requiring-gemspec-.patch
 Patch:          0007-chore-remove-nullable-field-from-basic_attrs.patch
 
 
-
 BuildRequires:  ruby(release)
 BuildRequires:  rubygems-devel
 BuildRequires:  ruby >= 2.4.0
@@ -35,8 +34,10 @@ BuildRequires:  rubygem(csv)
 BuildRequires:  rubygem(em-websocket)
 BuildRequires:  rubygem(httpclient)
 BuildRequires:  rubygem(i18n)
-#BuildRequires:  rubygem(jekyll-sass-converter) >= 2.0.0
-#BuildRequires:  rubygem(jekyll-watch) >= 2.0.0
+%if %{without bootstrap}
+BuildRequires:  rubygem(jekyll-sass-converter) >= 2.0.0
+BuildRequires:  rubygem(jekyll-watch) >= 2.0.0
+%endif
 BuildRequires:  rubygem(kramdown) >= 2.0.0
 BuildRequires:  rubygem(kramdown-parser-gfm)
 BuildRequires:  rubygem(kramdown-syntax-coderay)
@@ -64,8 +65,10 @@ Requires:       rubygem(csv)
 Requires:       rubygem(json)
 
 # Additional gems needed to actually deploy jekyll with default settings:
+%if %{without bootstrap}
 Recommends:     rubygem(jekyll-feed)
 Recommends:     rubygem(jekyll-seo-tag)
+%endif
 Recommends:     rubygem(minima)
 
 # Provide "jekyll", since this package ships a binary
@@ -127,11 +130,8 @@ mkdir -p %{buildroot}%{_mandir}/man1
 %if %{without bootstrap}
 help2man -N -s1 -o %{buildroot}%{_mandir}/man1/%{gem_name}.1 \
     %{buildroot}/usr/share/gems/gems/%{gem_name}-%{version}/exe/%{gem_name}
-%endif
-
 
 %check
-%if %{without bootstrap}
 # Test suite calls 'jekyll' from PATH, which in turn requires 'jekyll' gem.
 PATH="$PATH:%{buildroot}%{_bindir}/"
 export GEM_PATH="%{buildroot}/%{gem_dir}:%{gem_dir}"
@@ -139,7 +139,6 @@ export GEM_PATH="%{buildroot}/%{gem_dir}:%{gem_dir}"
 # Related: https://github.com/jekyll/jekyll/pull/9168
 TZ=UTC ruby -I"lib:test" -e 'Dir.glob "./test/**/test_*.rb", &method(:require)'
 %endif
-
 
 %files
 %license %{gem_instdir}/LICENSE
