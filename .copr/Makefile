@@ -1,2 +1,2 @@
 srpm:
-	rpkg srpm --with bootstrap
+	rpkg srpm --with bootstrap --outdir $(outdir)
