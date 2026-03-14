@@ -1,6 +1,4 @@
-/jekyll-*.gem
-/jekyll-*.tar.gz
-/rubygem-jekyll-*.src.rpm
-/.build*.log
 /noarch
+/.build*
+/*.src.rpm
 /results_rubygem-jekyll

@@ -17,7 +17,13 @@ Patch:          0003-test-disable-tests-requiring-the-test-theme.patch
 Patch:          0004-tests-related_posts-disable-tests-requiring-classifi.patch
 Patch:          0005-test-coffeescript-disable-tests-requiring-coffeescri.patch
 Patch:          0006-test-plugin_manager-disable-tests-requiring-gemspec-.patch
+<<<<<<< HEAD
 Patch:          0007-chore-remove-nullable-field-from-basic_attrs.patch
+=======
+Patch:          0007-Revert-tests-to-expect-jekyll-sass-converter-2.patch
+Patch:          0008-chore-remove-optional-attr-from-required-args.patch
+
+>>>>>>> 7151bbc (chore: revive for rawhide)
 
 
 BuildRequires:  ruby(release)

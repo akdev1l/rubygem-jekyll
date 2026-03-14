@@ -1,0 +1,25 @@
+From 4c5fceb1dc173e09b0ec30485cf72574cd52315e Mon Sep 17 00:00:00 2001
+From: Alex Diaz <alex@akdev.xyz>
+Date: Sat, 14 Mar 2026 16:17:41 -0400
+Subject: [PATCH] chore: remove optional attr from required args
+
+---
+ test/test_page_without_a_file.rb | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/test/test_page_without_a_file.rb b/test/test_page_without_a_file.rb
+index e92021326..5254cd444 100644
+--- a/test/test_page_without_a_file.rb
++++ b/test/test_page_without_a_file.rb
+@@ -64,7 +64,7 @@ class TestPageWithoutAFile < JekyllUnitTest
+         assert_equal "All the properties.\n", regular_page["content"]
+         assert_equal "properties.html", regular_page["name"]
+ 
+-        basic_attrs = %w(dir name path url excerpt)
++        basic_attrs = %w(dir name path url)
+         attrs = {
+           "content"   => nil,
+           "dir"       => "/",
+-- 
+2.53.0
+
