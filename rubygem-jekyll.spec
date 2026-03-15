@@ -1,4 +1,4 @@
-%bcond_without bootstrap
+%bcond_with bootstrap
 %global gem_name jekyll
 
 Name:           rubygem-%{gem_name}
