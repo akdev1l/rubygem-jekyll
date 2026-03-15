@@ -38,6 +38,8 @@ BuildRequires:  rubygem(i18n)
 %if %{without bootstrap}
 BuildRequires:  rubygem(jekyll-sass-converter) >= 2.0.0
 BuildRequires:  rubygem(jekyll-watch) >= 2.0.0
+%else
+%global __requires_exclude jekyll-sass-converter
 %endif
 BuildRequires:  rubygem(kramdown) >= 2.0.0
 BuildRequires:  rubygem(kramdown-parser-gfm)
@@ -69,8 +71,8 @@ Requires:       rubygem(json)
 %if %{without bootstrap}
 Recommends:     rubygem(jekyll-feed)
 Recommends:     rubygem(jekyll-seo-tag)
-%endif
 Recommends:     rubygem(minima)
+%endif
 
 # Provide "jekyll", since this package ships a binary
 Provides:       %{gem_name} = %{version}-%{release}
